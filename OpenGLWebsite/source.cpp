@@ -17,7 +17,7 @@ const char* fragmentShaderSource = "#version 330 core\n"
 "out vec4 FragColor;\n"
 "void main()\n"
 "{\n"
-"	FragColor = vec4(0.5f, 0.4f, 0.5f, 1.0f);\n"
+"	FragColor = vec4(0.0f, 1.0f, 0.0f, 1.0f);\n"
 "}\n\0";
 
 
@@ -51,27 +51,27 @@ int main()
 	}
 #pragma endregion
 
-	//Create a vertex shader object
+	// Create a vertex shader object
 	unsigned int vertexShader;
 	vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
-	//Attach shader source code to shader object
+	// Attach shader source code to shader object
 	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
 	glCompileShader(vertexShader);
 
 	errorHandeling::checkShader(vertexShader);
 
-	//Create a vertex shader
+	// Create a fragment shader
 	unsigned int fragmentShader;
 	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
-	//Attatch the shader and compile it	
+	// Attatch the shader and compile it	
 	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
 	glCompileShader(fragmentShader);
 
 	errorHandeling::checkShader(fragmentShader);
 
-	//Create shader programm
+	// Create shader programm
 	unsigned int shaderProgram;
 	shaderProgram = glCreateProgram();
 
@@ -86,7 +86,7 @@ int main()
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 
-	//Create a array to store vertex data
+	// Create a array to store vertex data
 	float vertecies[] = {
 		//x		y		z
 		-0.5f, -0.5f, 0.0f, //Left
@@ -94,41 +94,77 @@ int main()
 		 0.0f,  0.5f, 0.0f	//Top
 	};
 
-	//Create a vertex buffer object (VBO)
-	unsigned int VBO;
+	// Create a var to store VBO and VAO ID
+	unsigned int VBO, VAO;
 
-	//Generates 1 id for the VBO and stores it in the VBO variable
+	// Generates 1 id for the VBO and stores it in the VBO ID variable
+	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 
-	//Copy the previous defined vertex data into the buffer
+	// Bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+	glBindVertexArray(VAO);
+	// Copy the previous defined vertex data into the buffer
+	
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
-	//Copy the vertex data into the buffer
+	// Copy the vertex data into the buffer
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertecies), vertecies, GL_STATIC_DRAW);
 	 
-	//Vertex attributes
+	// Vertex attributes
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-
+	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
+	// You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
+	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
 	glBindVertexArray(0);
 
+	// uncomment this call to draw in wireframe polygons.
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+		float red = 1.0f;
+		bool up = true;
 	//Main while render loop
 	while (!glfwWindowShouldClose(window))
 	{
 		//Input
 		processInput(window);
-
+		#pragma region color change
+		//if (red >= 1.0f)
+		//{
+		//	up = false;
+		//}
+		//else if (red <= 0.0f)
+		//{
+		//	up = true;
+		//}
+		//
+		//if (up)
+		//{
+		//	red += 0.006f;
+		//}
+		//else
+		//{
+		//	red -= 0.006f;
+		//}
+		std::cout << red << std::endl;
+#pragma endregion
 		//Render Commands
-		glClearColor(0.5f, 0.4f, 0.5f, 1.0f);
+		glClearColor(red, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		//Swap frame buffers
+		glUseProgram(shaderProgram);
+		glBindVertexArray(VAO);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 		glfwSwapBuffers(window);
 		//Check for any events
 		glfwPollEvents();
 	}
+
+	// Cleanup the resources when programm end
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
+	glDeleteProgram(shaderProgram);
 
 	//Clean up glfw 
 	glfwTerminate();
