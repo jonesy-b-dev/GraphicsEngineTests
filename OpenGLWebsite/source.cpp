@@ -6,6 +6,8 @@
 #include "source.h"
 #include "errorHandeling.h"
 
+
+
 const char* vertexShaderSource = "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
 "void main()\n"
@@ -31,7 +33,7 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //Use core profile
 
 	//Create window
-	GLFWwindow* window = glfwCreateWindow(800, 600, "OpenGLgamin", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "OpenGLgamin", NULL, NULL);
 	if (window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
@@ -87,19 +89,25 @@ int main()
 	glDeleteShader(fragmentShader);
 
 	// Create a array to store vertex data
-	float vertecies[] = {
-		//x		y		z
-		-0.5f, -0.5f, 0.0f, //Left
-		 0.5f, -0.5f, 0.0f,	//Right
-		 0.0f,  0.5f, 0.0f	//Top
+	float vertices[] = {
+		 0.5f,  0.5f, 0.0f,  // top right
+		 0.5f, -0.5f, 0.0f,  // bottom right
+		-0.5f, -0.5f, 0.0f,  // bottom left
+		-0.5f,  0.5f, 0.0f   // top left 
 	};
 
-	// Create a var to store VBO and VAO ID
-	unsigned int VBO, VAO;
+	unsigned int indices[] = {  // note that we start from 0!
+		0, 1, 3,   // first triangle
+		1, 2, 3    // second triangle
+	};
+
+	// Create a var to store VBO, VAO and EBO ID
+	unsigned int VBO, VAO, EBO;
 
 	// Generates 1 id for the VBO and stores it in the VBO ID variable
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &EBO);
 
 	// Bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
 	glBindVertexArray(VAO);
@@ -107,8 +115,11 @@ int main()
 	
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	// Copy the vertex data into the buffer
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertecies), vertecies, GL_STATIC_DRAW);
-	 
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
 	// Vertex attributes
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
@@ -146,7 +157,7 @@ int main()
 		//{
 		//	red -= 0.006f;
 		//}
-		std::cout << red << std::endl;
+		//std::cout << red << std::endl;
 #pragma endregion
 		//Render Commands
 		glClearColor(red, 0.0f, 0.0f, 1.0f);
@@ -155,7 +166,10 @@ int main()
 		//Swap frame buffers
 		glUseProgram(shaderProgram);
 		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		// Draw without EBO
+		//glDrawArrays(GL_TRIANGLES, 0, 3);
+		// Draw with EBO
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glfwSwapBuffers(window);
 		//Check for any events
 		glfwPollEvents();
@@ -164,6 +178,7 @@ int main()
 	// Cleanup the resources when programm end
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &EBO);
 	glDeleteProgram(shaderProgram);
 
 	//Clean up glfw 
@@ -178,12 +193,38 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 }
 
 
+bool wireframeMode = false;
+bool wireframeKeyPressed = false;
+
 //Processes any key that is pressed
 void processInput(GLFWwindow* window)
 {
-	//Print W to console for testing
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+
+	// Toggle between wireframe mode and fill mode
+	// In your rendering loop:
+	if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
 	{
-		std::cout << "W" << std::endl;
+		// Set the flag to true only if it wasn't already set
+		if (!wireframeKeyPressed)
+		{
+			wireframeKeyPressed = true;
+
+			// Toggle between wireframe mode and normal mode
+			if (wireframeMode)
+			{
+				wireframeMode = false;
+				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			}
+			else
+			{
+				wireframeMode = true;
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			}
+		}
+	}
+	else
+	{
+		// Reset the flag when the key is released
+		wireframeKeyPressed = false;
 	}
 }
