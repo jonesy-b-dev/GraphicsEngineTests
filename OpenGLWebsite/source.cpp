@@ -54,8 +54,7 @@ int main()
 #pragma endregion
 
 	// Create a vertex shader object
-	unsigned int vertexShader;
-	vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
 	// Attach shader source code to shader object
 	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
@@ -64,8 +63,7 @@ int main()
 	errorHandeling::checkShader(vertexShader);
 
 	// Create a fragment shader
-	unsigned int fragmentShader;
-	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
 	// Attatch the shader and compile it	
 	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
@@ -74,8 +72,7 @@ int main()
 	errorHandeling::checkShader(fragmentShader);
 
 	// Create shader programm
-	unsigned int shaderProgram;
-	shaderProgram = glCreateProgram();
+	unsigned int shaderProgram = glCreateProgram();
 
 	glAttachShader(shaderProgram, vertexShader);
 	glAttachShader(shaderProgram, fragmentShader);
