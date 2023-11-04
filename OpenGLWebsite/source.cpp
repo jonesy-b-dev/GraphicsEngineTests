@@ -243,5 +243,10 @@ void processInput(GLFWwindow* window)
 		// Reset the flag when the key is released
 		wireframeKeyPressed = false;
 	}
+
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	{
+		glfwSetWindowShouldClose(window, true);
+	}
 }
 #pragma endregion
