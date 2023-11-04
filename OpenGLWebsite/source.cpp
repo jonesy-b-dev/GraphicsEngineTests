@@ -1,13 +1,11 @@
 #include "glad\glad.h"
 #include <glfw3.h>
-#include <iostream>
 #include <stdio.h>
-
+#include <cmath>
 #include "source.h"
 #include "errorHandeling.h"
 
-
-
+#pragma region Shader Code
 const char* vertexShaderSource = "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
 "void main()\n"
@@ -17,10 +15,12 @@ const char* vertexShaderSource = "#version 330 core\n"
 
 const char* fragmentShaderSource = "#version 330 core\n"
 "out vec4 FragColor;\n"
+"uniform vec4 u_vertexColor;\n"
 "void main()\n"
 "{\n"
-"	FragColor = vec4(0.0f, 1.0f, 0.0f, 1.0f);\n"
+"	FragColor = u_vertexColor;\n"
 "}\n\0";
+#pragma endregion
 
 
 int main()
@@ -28,31 +28,42 @@ int main()
 	#pragma region Initialisation
 	//Init GLFW
     glfwInit();
+	// uncomment for (borderless) fullscreen mode 
+	//GLFWmonitor* primary = glfwGetPrimaryMonitor(); 
+	//const GLFWvidmode* mode = glfwGetVideoMode(primary);
+	//
+	//glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+	//glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
+	//glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
+	//glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+	//
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //Use core profile
-
 	//Create window
+	//GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, "OpenGLgamin", primary, NULL);
 	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "OpenGLgamin", NULL, NULL);
 	if (window == NULL)
 	{
-		std::cout << "Failed to create GLFW window" << std::endl;
+		printf("Failed to create GLFW window \n");
 		glfwTerminate();
 		return -1;
 	}
 	
 	glfwMakeContextCurrent(window);
+	glfwSwapInterval(0);
 	//Tell GLWF to call this function on every window resizes
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 	//Init GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
-		std::cout << "Failed to initialize GLAD" << std::endl;
+		printf("Failed to initialize GLAD");
 		return -1;
 	}
 #pragma endregion
 
+	#pragma region Shader Stuff
 	// Create a vertex shader object
 	unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
@@ -84,7 +95,9 @@ int main()
 
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
+	#pragma endregion
 
+	#pragma region Buffer Stuff
 	// Create a array to store vertex data
 	float vertices[] = {
 		 0.5f,  0.5f, 0.0f,  // top right
@@ -125,58 +138,47 @@ int main()
 	// You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
 	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
 	glBindVertexArray(0);
+	#pragma endregion
 
 	// uncomment this call to draw in wireframe polygons.
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-		float red = 1.0f;
-		bool up = true;
+#pragma region Main While Loop
 	//Main while render loop
 	while (!glfwWindowShouldClose(window))
 	{
-		//Input
+		printFps();
+
+		// Input
 		processInput(window);
-		#pragma region color change
-		//if (red >= 1.0f)
-		//{
-		//	up = false;
-		//}
-		//else if (red <= 0.0f)
-		//{
-		//	up = true;
-		//}
-		//
-		//if (up)
-		//{
-		//	red += 0.006f;
-		//}
-		//else
-		//{
-		//	red -= 0.006f;
-		//}
-		//std::cout << red << std::endl;
-#pragma endregion
-		//Render Commands
-		glClearColor(red, 0.0f, 0.0f, 1.0f);
+
+		// Render Commands
+		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		//Swap frame buffers
+		// Use the shader program we created earlier
 		glUseProgram(shaderProgram);
+
+		// Make trianle go sine with ts color
+		float greenValue = (sin(glfwGetTime()) / 2.0f) + 0.5f;
+		glUniform4f(glGetUniformLocation(shaderProgram, "u_vertexColor"), 0.0f, greenValue, 0.0f, 1.0f);
+
 		glBindVertexArray(VAO);
-		// Draw without EBO
-		//glDrawArrays(GL_TRIANGLES, 0, 3);
 		// Draw with EBO
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glfwSwapBuffers(window);
-		//Check for any events
+		// Check for any events
 		glfwPollEvents();
 	}
-
+	#pragma endregion
+	
+	#pragma region Clean Up
 	// Cleanup the resources when programm end
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
 	glDeleteBuffers(1, &EBO);
 	glDeleteProgram(shaderProgram);
+	#pragma endregion
 
 	//Clean up glfw 
 	glfwTerminate();
@@ -190,13 +192,30 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 }
 
 
+
+void printFps()
+{
+	double currentTime = glfwGetTime();
+	frameCount++;
+	// If a second has passed.
+	if (currentTime - previousTime >= 1.0)
+	{
+		// Display the frame count here any way you want.
+		printf("fps: ");
+		printf("%d\n", frameCount);
+
+		frameCount = 0;
+		previousTime = currentTime;
+	}
+}
+#pragma region Input
 bool wireframeMode = false;
 bool wireframeKeyPressed = false;
+
 
 //Processes any key that is pressed
 void processInput(GLFWwindow* window)
 {
-
 	// Toggle between wireframe mode and fill mode
 	// In your rendering loop:
 	if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
@@ -225,3 +244,4 @@ void processInput(GLFWwindow* window)
 		wireframeKeyPressed = false;
 	}
 }
+#pragma endregion
