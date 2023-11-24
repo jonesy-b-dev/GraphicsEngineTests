@@ -1,5 +1,7 @@
-#include "glad\glad.h"
+#pragma region Includes
+
 #include <glfw3.h>
+#include "glad\glad.h"
 #include <stdio.h>
 #include <cmath>
 #include <imgui.h>
@@ -9,6 +11,7 @@
 
 #include "source.h"
 #include "errorHandeling.h"
+#pragma endregion
 
 #pragma region Shader Code
 const char* vertexShaderSource = "#version 460 core\n"
@@ -70,6 +73,16 @@ int main()
 		return -1;
 	}
 	std::cout << glGetString(GL_VERSION);
+
+	#pragma region ImGui Init
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	ImGui::StyleColorsDark();
+	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplOpenGL3_Init("#version 460");
+	#pragma endregion
+
 #pragma endregion
 
 	#pragma region Shader Stuff
@@ -154,17 +167,9 @@ int main()
 	glBindVertexArray(0);
 	#pragma endregion
 
-	// uncomment this call to draw in wireframe polygons.
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	ImGui::StyleColorsDark();
-	ImGui_ImplGlfw_InitForOpenGL(window, true);
-	ImGui_ImplOpenGL3_Init("#version 460");
+	#pragma region Main While Loop
 
-#pragma region Main While Loop
 	//Main while render loop
 	while (!glfwWindowShouldClose(window))
 	{
@@ -174,7 +179,7 @@ int main()
 		processInput(window);
 
 		// Render Commands
-		glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+		glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// ImGui stuff
@@ -194,7 +199,7 @@ int main()
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		ImGui::Begin("TestWindow");
-		ImGui::Text("hello world");
+		ImGui::ColorEdit3("Background Color", (float*)&clear_color);
 		ImGui::End();
 
 		ImGui::Render();
@@ -220,7 +225,8 @@ int main()
 	//Clean up glfw 
 	glfwTerminate();
 	#pragma endregion
-    return 0;
+    
+	return 0;
 } 
 
 #pragma region Additional Funcitons

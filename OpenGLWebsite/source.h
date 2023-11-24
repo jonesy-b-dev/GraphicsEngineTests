@@ -7,8 +7,11 @@ void processInput(GLFWwindow* window);
 void printFps();
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 960;
+const unsigned int SCR_HEIGHT = 720;
 
 double previousTime = glfwGetTime();
 int frameCount = 0;
+
+// Background color values 
+ImVec4 clear_color = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);
