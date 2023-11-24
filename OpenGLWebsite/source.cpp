@@ -5,12 +5,13 @@
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
+#include <iostream>
 
 #include "source.h"
 #include "errorHandeling.h"
 
 #pragma region Shader Code
-const char* vertexShaderSource = "#version 330 core\n"
+const char* vertexShaderSource = "#version 460 core\n"
 "layout (location = 0) in vec3 aPos;\n"
 "layout (location = 1) in vec3 aColor;\n"
 "out vec3 color;\n"
@@ -20,7 +21,7 @@ const char* vertexShaderSource = "#version 330 core\n"
 "	color = aColor;\n"
 "}\0";
 
-const char* fragmentShaderSource = "#version 330 core\n"
+const char* fragmentShaderSource = "#version 460 core\n"
 "out vec4 FragColor;\n"
 "in vec3 color;\n"
 "void main()\n"
@@ -68,6 +69,7 @@ int main()
 		printf("Failed to initialize GLAD");
 		return -1;
 	}
+	std::cout << glGetString(GL_VERSION);
 #pragma endregion
 
 	#pragma region Shader Stuff
@@ -160,7 +162,8 @@ int main()
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	ImGui::StyleColorsDark();
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
-	ImGui_ImplOpenGL3_Init("version #330");
+	ImGui_ImplOpenGL3_Init("#version 460");
+
 #pragma region Main While Loop
 	//Main while render loop
 	while (!glfwWindowShouldClose(window))
@@ -174,6 +177,11 @@ int main()
 		glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		// ImGui stuff
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
 		// Use the shader program we created earlier
 		glUseProgram(shaderProgram);
 
@@ -184,6 +192,14 @@ int main()
 		glBindVertexArray(VAO);
 		// Draw with EBO
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+		ImGui::Begin("TestWindow");
+		ImGui::Text("hello world");
+		ImGui::End();
+
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
 		glfwSwapBuffers(window);
 		// Check for any events
 		glfwPollEvents();
@@ -191,6 +207,10 @@ int main()
 	#pragma endregion
 	
 	#pragma region Clean Up
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
+
 	// Cleanup the resources when programm end
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);

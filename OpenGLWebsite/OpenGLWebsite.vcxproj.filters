@@ -48,6 +48,9 @@
     <ClCompile Include="..\Dependencies\ImGui\imgui_widgets.cpp">
       <Filter>Source Files\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="..\Dependencies\ImGui\imgui_draw.cpp">
+      <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source.h">
@@ -75,6 +78,12 @@
       <Filter>Header Files\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="..\Dependencies\ImGui\imstb_truetype.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\ImGui\imgui_impl_glfw.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\ImGui\imstb_textedit.h">
       <Filter>Header Files\ImGui</Filter>
     </ClInclude>
   </ItemGroup>
