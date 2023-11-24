@@ -1,7 +1,8 @@
-#include "glad\glad.h";
-#include <glfw3.h>;
-#include <iostream>;
+#include "glad\glad.h"
+#include <glfw3.h>
+#include <iostream>
 #include <stdio.h>
+
 
 #include "errorHandeling.h"
 

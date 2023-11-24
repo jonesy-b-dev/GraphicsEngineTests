@@ -71,7 +71,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\Glad\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\ImGui;$(SolutionDir)Dependencies\Glad\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Dependencies\GLFW\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -112,6 +112,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>Dependencies/ImGui</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -137,11 +138,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Dependencies\ImGui\imgui.cpp" />
+    <ClCompile Include="..\Dependencies\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="..\Dependencies\ImGui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="..\Dependencies\ImGui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="..\Dependencies\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="..\Dependencies\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="errorHandeling.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Dependencies\ImGui\imconfig.h" />
+    <ClInclude Include="..\Dependencies\ImGui\imgui.h" />
+    <ClInclude Include="..\Dependencies\ImGui\imgui_impl_opengl3.h" />
+    <ClInclude Include="..\Dependencies\ImGui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="..\Dependencies\ImGui\imgui_internal.h" />
+    <ClInclude Include="..\Dependencies\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="..\Dependencies\ImGui\imstb_truetype.h" />
     <ClInclude Include="errorHandeling.h" />
     <ClInclude Include="source.h" />
   </ItemGroup>

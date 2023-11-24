@@ -2,6 +2,9 @@
 #include <glfw3.h>
 #include <stdio.h>
 #include <cmath>
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 
 #include "source.h"
 #include "errorHandeling.h"
@@ -152,6 +155,12 @@ int main()
 	// uncomment this call to draw in wireframe polygons.
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	ImGui::StyleColorsDark();
+	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplOpenGL3_Init("version #330");
 #pragma region Main While Loop
 	//Main while render loop
 	while (!glfwWindowShouldClose(window))
