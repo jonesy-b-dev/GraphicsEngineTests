@@ -11,7 +11,7 @@
 *.sln.docstates
 
 # ImGUI ini file
-OpenGlWebsite/imgui.ini
+imgui.ini
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

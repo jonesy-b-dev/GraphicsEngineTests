@@ -7,6 +7,7 @@
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
+#include <iostream>
 
 #include "source.h"
 #include "errorHandeling.h"
@@ -71,7 +72,7 @@ int main()
 		printf("Failed to initialize GLAD");
 		return -1;
 	}
-	printf("%s", glGetString(GL_VERSION));
+	std::cout << glGetString(GL_VERSION);
 
 	#pragma region ImGui Init
 	IMGUI_CHECKVERSION();
@@ -165,6 +166,7 @@ int main()
 	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
 	glBindVertexArray(0);
 	#pragma endregion
+
 
 	#pragma region Main While Loop
 
