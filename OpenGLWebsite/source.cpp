@@ -7,10 +7,12 @@
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
-#include "shader.h"
 
+#include "shader.h"
 #include "source.h"
 #include "errorHandeling.h"
+#include "InputHandler.h"
+
 #pragma endregion
 
 
@@ -52,8 +54,11 @@ int main()
 		printf("Failed to initialize GLAD");
 		return -1;
 	}
-
+	//Print out OpenGL version to the console
 	printf("%s\n", glGetString(GL_VERSION));
+
+	//Create a input handler
+	InputHandler inputHandler(window);
 
 	#pragma region ImGui Init
 	IMGUI_CHECKVERSION();
@@ -66,7 +71,7 @@ int main()
 
 #pragma endregion
 
-	Shader ourShader("vertexShader.vs", "fragmentShader.fs"); // you can name your shader files however you like
+	Shader shaders("vertexShader.vs", "fragmentShader.fs"); // you can name your shader files however you like
 
 	#pragma region Buffer Stuff
 	// Create a array to store vertex data
@@ -125,7 +130,7 @@ int main()
 		printFps();
 
 		// Input
-		processInput(window);
+		inputHandler.processInput();
 
 		// Render Commands
 		glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
@@ -135,9 +140,7 @@ int main()
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		ourShader.use();
-		// Use the shader program we created earlier
-		//glUseProgram(shaderProgram);
+		shaders.use();
 
 		//// Make trianle go sine with ts color
 		//float greenValue = (sin(glfwGetTime()) / 2.0f) + 0.5f;
@@ -198,49 +201,6 @@ void printFps()
 
 		frameCount = 0;
 		previousTime = currentTime;
-	}
-}
-#pragma endregion
-
-#pragma region Input
-
-bool wireframeMode = false;
-bool wireframeKeyPressed = false;
-
-//Processes any key that is pressed
-void processInput(GLFWwindow* window)
-{
-	// Toggle between wireframe mode and fill mode
-	// In your rendering loop:
-	if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
-	{
-		// Set the flag to true only if it wasn't already set
-		if (!wireframeKeyPressed)
-		{
-			wireframeKeyPressed = true;
-
-			// Toggle between wireframe mode and normal mode
-			if (wireframeMode)
-			{
-				wireframeMode = false;
-				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-			}
-			else
-			{
-				wireframeMode = true;
-				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			}
-		}
-	}
-	else
-	{
-		// Reset the flag when the key is released
-		wireframeKeyPressed = false;
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-	{
-		glfwSetWindowShouldClose(window, true);
 	}
 }
 #pragma endregion

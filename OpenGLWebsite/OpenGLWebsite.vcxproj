@@ -212,6 +212,7 @@
     <ClCompile Include="..\Dependencies\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="errorHandeling.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="source.cpp" />
   </ItemGroup>
@@ -226,6 +227,7 @@
     <ClInclude Include="..\Dependencies\ImGui\imstb_textedit.h" />
     <ClInclude Include="..\Dependencies\ImGui\imstb_truetype.h" />
     <ClInclude Include="errorHandeling.h" />
+    <ClInclude Include="InputHandler.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="source.h" />
   </ItemGroup>
