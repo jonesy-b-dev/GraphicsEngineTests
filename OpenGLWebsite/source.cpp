@@ -7,7 +7,7 @@
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
-#include <iostream>
+#include "shader.h"
 
 #include "source.h"
 #include "errorHandeling.h"
@@ -72,7 +72,7 @@ int main()
 		printf("Failed to initialize GLAD");
 		return -1;
 	}
-	std::cout << glGetString(GL_VERSION);
+	printf("%s", glGetString(GL_VERSION));
 
 	#pragma region ImGui Init
 	IMGUI_CHECKVERSION();
@@ -85,38 +85,40 @@ int main()
 
 #pragma endregion
 
+	Shader ourShader("vertexShader.fs", "fragmentShader.fs"); // you can name your shader files however you like
+
 	#pragma region Shader Stuff
-	// Create a vertex shader object
-	unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-
-	// Attach shader source code to shader object
-	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-	glCompileShader(vertexShader);
-
-	errorHandeling::checkShader(vertexShader);
-
-	// Create a fragment shader
-	unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-
-	// Attatch the shader and compile it	
-	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-	glCompileShader(fragmentShader);
-
-	errorHandeling::checkShader(fragmentShader);
-
-	// Create shader programm
-	unsigned int shaderProgram = glCreateProgram();
-
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-
-	errorHandeling::checkShaderProgram(shaderProgram);
-
-	glUseProgram(shaderProgram);
-
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
+	//// Create a vertex shader object
+	//unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	//
+	//// Attach shader source code to shader object
+	//glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+	//glCompileShader(vertexShader);
+	//
+	//errorHandeling::checkShader(vertexShader);
+	//
+	//// Create a fragment shader
+	//unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	//
+	//// Attatch the shader and compile it	
+	//glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+	//glCompileShader(fragmentShader);
+	//
+	//errorHandeling::checkShader(fragmentShader);
+	//
+	//// Create shader programm
+	//unsigned int shaderProgram = glCreateProgram();
+	//
+	//glAttachShader(shaderProgram, vertexShader);
+	//glAttachShader(shaderProgram, fragmentShader);
+	//glLinkProgram(shaderProgram);
+	//
+	//errorHandeling::checkShaderProgram(shaderProgram);
+	//
+	//glUseProgram(shaderProgram);
+	//
+	//glDeleteShader(vertexShader);
+	//glDeleteShader(fragmentShader);
 	#pragma endregion
 
 	#pragma region Buffer Stuff
@@ -181,18 +183,18 @@ int main()
 		// Render Commands
 		glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
 		glClear(GL_COLOR_BUFFER_BIT);
-
+		ourShader.use();
 		// ImGui stuff
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
 		// Use the shader program we created earlier
-		glUseProgram(shaderProgram);
+		//glUseProgram(shaderProgram);
 
-		// Make trianle go sine with ts color
-		float greenValue = (sin(glfwGetTime()) / 2.0f) + 0.5f;
-		glUniform4f(glGetUniformLocation(shaderProgram, "u_vertexColor"), 0.0f, greenValue, 0.0f, 1.0f);
+		//// Make trianle go sine with ts color
+		//float greenValue = (sin(glfwGetTime()) / 2.0f) + 0.5f;
+		//glUniform4f(glGetUniformLocation(shaderProgram, "u_vertexColor"), 0.0f, greenValue, 0.0f, 1.0f);
 
 		glBindVertexArray(VAO);
 		// Draw with EBO
@@ -220,7 +222,6 @@ int main()
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
 	glDeleteBuffers(1, &EBO);
-	glDeleteProgram(shaderProgram);
 
 	//Clean up glfw 
 	glfwTerminate();
