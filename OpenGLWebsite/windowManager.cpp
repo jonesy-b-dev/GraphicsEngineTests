@@ -27,6 +27,7 @@ windowManager::windowManager(int width, int height, const char* name)
 		glfwTerminate();
 		//return -1;
 	}
+	
 
 	glfwMakeContextCurrent(m_window);
 	glfwSwapInterval(0);

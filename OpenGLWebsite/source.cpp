@@ -9,8 +9,9 @@ int main()
 {
 	#pragma region Initialisation
 	
+	// Create window
 	windowManager window(SCR_WIDTH, SCR_HEIGHT, "openglgaming");
-
+	// Set function to call when window resizes (should be abstracted but vant get it to work fsr)
 	glfwSetFramebufferSizeCallback(window.getWindow(), framebuffer_size_callback);
 	
 	//Init GLAD
@@ -92,7 +93,7 @@ int main()
 	//Main while render loop
 	while (!glfwWindowShouldClose(window.getWindow()))
 	{
-		printFps();
+		printFps(window.getWindow());
 
 		// Input
 		inputHandler.processInput();
@@ -153,16 +154,18 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	glViewport(0, 0, width, height);
 }
 
-void printFps()
+void printFps(GLFWwindow* window)
 {
 	double currentTime = glfwGetTime();
 	frameCount++;
 	// If a second has passed.
 	if (currentTime - previousTime >= 1.0)
 	{
-		// Display the frame count here any way you want.
-		printf("fps: ");
-		printf("%d\n", frameCount);
+		// Convert frameCount to a string using sprintf_s
+		char titleBuffer[256]; // Adjust the size as needed
+		sprintf_s(titleBuffer, sizeof(titleBuffer), "fps: %d", frameCount);
+
+		glfwSetWindowTitle(window, titleBuffer);
 
 		frameCount = 0;
 		previousTime = currentTime;

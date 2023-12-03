@@ -9,7 +9,7 @@
 
 int main();
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void printFps();
+void printFps(GLFWwindow* window);
 
 // settings
 const unsigned int SCR_WIDTH = 960;
