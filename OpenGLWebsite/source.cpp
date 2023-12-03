@@ -1,53 +1,18 @@
-#pragma region Includes
-
-#include <glfw3.h>
-#include "glad\glad.h"
-#include <stdio.h>
-#include <cmath>
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
-
-#include "shader.h"
+//includes all the libs
 #include "source.h"
+#include "shader.h"
 #include "errorHandeling.h"
 #include "InputHandler.h"
-
-#pragma endregion
-
+#include "windowManager.h"
 
 int main()
 {
 	#pragma region Initialisation
-	//Init GLFW
-    glfwInit();
-	// uncomment for (borderless) fullscreen mode 
-	//GLFWmonitor* primary = glfwGetPrimaryMonitor(); 
-	//const GLFWvidmode* mode = glfwGetVideoMode(primary);
-	//
-	//glfwWindowHint(GLFW_RED_BITS, mode->redBits);
-	//glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
-	//glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
-	//glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
-	//
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); 
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //Use core profile
-	//Create window
-	//GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, "OpenGLgamin", primary, NULL);
-	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "OpenGLgamin", NULL, NULL);
-	if (window == NULL)
-	{
-		printf("Failed to create GLFW window \n");
-		glfwTerminate();
-		return -1;
-	}
 	
-	glfwMakeContextCurrent(window);
-	glfwSwapInterval(0);
-	//Tell GLWF to call this function on every window resizes
-	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	windowManager window(SCR_WIDTH, SCR_HEIGHT, "openglgaming");
 
+	glfwSetFramebufferSizeCallback(window.getWindow(), framebuffer_size_callback);
+	
 	//Init GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
@@ -58,14 +23,14 @@ int main()
 	printf("%s\n", glGetString(GL_VERSION));
 
 	//Create a input handler
-	InputHandler inputHandler(window);
+	InputHandler inputHandler(window.getWindow());
 
 	#pragma region ImGui Init
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	ImGui::StyleColorsDark();
-	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplGlfw_InitForOpenGL(window.getWindow(), true);
 	ImGui_ImplOpenGL3_Init("#version 460");
 	#pragma endregion
 
@@ -125,7 +90,7 @@ int main()
 	#pragma region Main While Loop
 
 	//Main while render loop
-	while (!glfwWindowShouldClose(window))
+	while (!glfwWindowShouldClose(window.getWindow()))
 	{
 		printFps();
 
@@ -157,7 +122,7 @@ int main()
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-		glfwSwapBuffers(window);
+		glfwSwapBuffers(window.getWindow());
 		// Check for any events
 		glfwPollEvents();
 	}
