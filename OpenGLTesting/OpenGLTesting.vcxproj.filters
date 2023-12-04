@@ -106,7 +106,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="vertexShader.vs" />
-    <None Include="fragmentShader.fs" />
+    <None Include="Shaders\vertexShader.vert" />
+    <None Include="Shaders\fragmentShader.frag" />
   </ItemGroup>
 </Project>

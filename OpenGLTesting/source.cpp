@@ -37,7 +37,7 @@ int main()
 
 #pragma endregion
 
-	Shader shaders("vertexShader.vs", "fragmentShader.fs"); // you can name your shader files however you like
+	Shader shaders("Shaders/vertexShader.vert", "Shaders/fragmentShader.frag"); // you can name your shader files however you like
 
 	#pragma region Buffer Stuff
 	// Create a array to store vertex data
@@ -89,7 +89,6 @@ int main()
 
 
 	#pragma region Main While Loop
-
 	//Main while render loop
 	while (!glfwWindowShouldClose(window.getWindow()))
 	{
@@ -101,12 +100,14 @@ int main()
 		// Render Commands
 		glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		shaders.use();
+
 		// ImGui stuff
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		shaders.use();
 
 		//// Make trianle go sine with ts color
 		//float greenValue = (sin(glfwGetTime()) / 2.0f) + 0.5f;
