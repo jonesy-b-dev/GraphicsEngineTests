@@ -1,7 +1,25 @@
-Here I experiment with OpenGL and im following the tutorials on Learnopengl.com
+# OpenGL testing project
+I probaly wont achieve anything with it but might get some cool features one day
 
-Next to those tutorials I hope to add some IMGUI to customise stuff at runtime .
+## Current progress
+* Extremely wacky simple 2D renderer
+* Simple shader class
+* ImGui intergration
+* Some classes to abstract some of the code
+* Fps counter
+* Input handler
+  
+![image](https://github.com/jonesy-b-dev/GraphicsEngineTests/assets/59418915/cace4099-4fc9-4fea-84b6-13e072f49cfb)
 
-This is nothing of a serious project and im just learning stuff here. 
+## Stuff I want to implement
+* Textures
+* 3D rendering
+* Camera controls
+* Basic lighting
+* Docking ImGui
+* Model loading
+* Some kind of physics
 
-Later I hope to make some actual little game engine with a game made it.
+### Future
+I'll be mainly testing and learning in this project
+I hope to make a somewhat proper render engine/game engine later when im smart.
