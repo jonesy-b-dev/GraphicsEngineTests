@@ -30,7 +30,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{b9466e63-198f-481a-a18f-9b417c22a378}</ProjectGuid>
-    <RootNamespace>OpenGLWebsite</RootNamespace>
+    <RootNamespace>OpenGLTesting</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
