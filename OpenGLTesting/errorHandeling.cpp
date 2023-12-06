@@ -7,7 +7,7 @@
 #include "errorHandeling.h"
 
 
-void errorHandeling::checkShader(unsigned int shader)
+void errorHandeling::checkShader(unsigned int shader, const char* type)
 {
 	static int success;
 	static char infoLog[512];
@@ -19,7 +19,7 @@ void errorHandeling::checkShader(unsigned int shader)
 	if (!success)
 	{
 		glGetShaderInfoLog(shader, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::COMPILATION_FAILED\n" << infoLog << std::endl;
+		std::cout << "ERROR::" << type << "::SHADER::COMPILATION_FAILED\n" << infoLog << std::endl;
 	}
 }
 

@@ -35,7 +35,7 @@ int main()
 	ImGui_ImplOpenGL3_Init("#version 460");
 	#pragma endregion
 
-#pragma endregion
+	#pragma endregion
 
 	Shader shaders("Shaders/vertexShader.vert", "Shaders/fragmentShader.frag"); // you can name your shader files however you like
 
@@ -119,8 +119,6 @@ int main()
 	}
 	stbi_image_free(data);
 	#pragma endregion
-
-
 
 	#pragma region Main While Loop
 	//Main while render loop

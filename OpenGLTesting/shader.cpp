@@ -47,14 +47,14 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
     // Attach shader source code to shader object
     glShaderSource(vertex, 1, &vShaderCode, NULL);
     glCompileShader(vertex);
-    errorHandeling::checkShader(vertex);
+    errorHandeling::checkShader(vertex, "VERTEX");
     
     // Fragment Shader
     unsigned int fragment = glCreateShader(GL_FRAGMENT_SHADER);
     // Attach shader source code to shader object
     glShaderSource(fragment, 1, &fShaderCode, NULL);
     glCompileShader(fragment);
-    errorHandeling::checkShader(fragment);
+    errorHandeling::checkShader(fragment, "FRAGMENT");
 
     // shader Program
     shaderID = glCreateProgram();

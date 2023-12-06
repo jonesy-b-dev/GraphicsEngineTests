@@ -6,6 +6,6 @@ private:
 
 
 public:
-	static void checkShader(unsigned int shader);
+	static void checkShader(unsigned int shader, const char* type);
 	static void checkShaderProgram(unsigned int program);
 };	
