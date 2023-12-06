@@ -109,4 +109,9 @@
     <None Include="Shaders\vertexShader.vert" />
     <None Include="Shaders\fragmentShader.frag" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Textures\eclipse.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

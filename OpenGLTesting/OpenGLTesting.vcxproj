@@ -231,11 +231,16 @@
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="source.h" />
+    <ClInclude Include="stb_image.h" />
     <ClInclude Include="windowManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\fragmentShader.frag" />
     <None Include="Shaders\vertexShader.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Textures\eclipse.jpg" />
+    <Image Include="Textures\tom.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
