@@ -4,6 +4,9 @@
 #include "errorHandeling.h"
 #include "InputHandler.h"
 #include "windowManager.h"
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
+#include <gtc/type_ptr.hpp>
 
 int main()
 {
@@ -115,7 +118,7 @@ int main()
 	}
 	else
 	{
-		printf("Failed to load texture");
+		printf("Failed to load texture %s", data);
 	}
 	stbi_image_free(data);
 	#pragma endregion
