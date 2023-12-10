@@ -104,6 +104,9 @@
     <ClInclude Include="windowManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\vertexShader.vert" />
@@ -111,6 +114,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Textures\eclipse.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\tom.jpg">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
