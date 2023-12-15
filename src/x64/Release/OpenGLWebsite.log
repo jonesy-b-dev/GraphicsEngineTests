@@ -1,0 +1,26 @@
+﻿  source.cpp
+D:\Programming\GraphicsEngineTests\OpenGLWebsite\errorHandeling.h(11,2): warning C4091: 'static ': ignored on left of 'errorHandeling' when no variable is declared
+  (compiling source file 'source.cpp')
+  
+LINK : warning LNK4098: defaultlib 'MSVCRTD' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Generating code
+  2 of 2145 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    28 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+glfw.lib(context.obj) : warning LNK4099: PDB '' was not found with 'glfw.lib(context.obj)' or at ''; linking object as if no debug info
+glfw.lib(input.obj) : warning LNK4099: PDB '' was not found with 'glfw.lib(input.obj)' or at ''; linking object as if no debug info
+glfw.lib(window.obj) : warning LNK4099: PDB '' was not found with 'glfw.lib(window.obj)' or at ''; linking object as if no debug info
+glfw.lib(vulkan.obj) : warning LNK4099: PDB '' was not found with 'glfw.lib(vulkan.obj)' or at ''; linking object as if no debug info
+glfw.lib(monitor.obj) : warning LNK4099: PDB '' was not found with 'glfw.lib(monitor.obj)' or at ''; linking object as if no debug info
+glfw.lib(init.obj) : warning LNK4099: PDB '' was not found with 'glfw.lib(init.obj)' or at ''; linking object as if no debug info
+glfw.lib(win32_window.obj) : warning LNK4099: PDB '' was not found with 'glfw.lib(win32_window.obj)' or at ''; linking object as if no debug info
+glfw.lib(win32_thread.obj) : warning LNK4099: PDB '' was not found with 'glfw.lib(win32_thread.obj)' or at ''; linking object as if no debug info
+glfw.lib(win32_joystick.obj) : warning LNK4099: PDB '' was not found with 'glfw.lib(win32_joystick.obj)' or at ''; linking object as if no debug info
+glfw.lib(win32_time.obj) : warning LNK4099: PDB '' was not found with 'glfw.lib(win32_time.obj)' or at ''; linking object as if no debug info
+glfw.lib(win32_monitor.obj) : warning LNK4099: PDB '' was not found with 'glfw.lib(win32_monitor.obj)' or at ''; linking object as if no debug info
+glfw.lib(win32_init.obj) : warning LNK4099: PDB '' was not found with 'glfw.lib(win32_init.obj)' or at ''; linking object as if no debug info
+glfw.lib(wgl_context.obj) : warning LNK4099: PDB '' was not found with 'glfw.lib(wgl_context.obj)' or at ''; linking object as if no debug info
+glfw.lib(egl_context.obj) : warning LNK4099: PDB '' was not found with 'glfw.lib(egl_context.obj)' or at ''; linking object as if no debug info
+glfw.lib(osmesa_context.obj) : warning LNK4099: PDB '' was not found with 'glfw.lib(osmesa_context.obj)' or at ''; linking object as if no debug info
+  OpenGLWebsite.vcxproj -> D:\Programming\GraphicsEngineTests\x64\Release\OpenGLWebsite.exe
