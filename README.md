@@ -1,6 +1,14 @@
 # OpenGL testing project
 I probaly wont achieve anything with it but might get some cool features one day
 
+# How to build 
+> Note, I have only tested this on Windows x64 and Visual Studio 2022
+* Install premake5 if you haven't already
+* Clone the repository
+* Open the folder in a termial
+* Run premake5 [your editor, {check premake docs)]
+* Application should be ready to use now, if not please make an issue
+
 ## Current progress
 * Extremely wacky simple 2D renderer
 * Simple shader class
