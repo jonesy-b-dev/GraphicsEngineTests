@@ -1,6 +1,0 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (OpenGLWebsite.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  source.cpp
-D:\Programming\GraphicsEngineTests\OpenGLTesting\errorHandeling.h(11,2): warning C4091: 'static ': ignored on left of 'errorHandeling' when no variable is declared
-  (compiling source file 'source.cpp')
-  
-  OpenGLTesting.vcxproj -> D:\Programming\GraphicsEngineTests\x64\Debug\OpenGLTesting.exe
