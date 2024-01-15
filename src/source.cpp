@@ -204,7 +204,7 @@ int main()
 		glm::mat4 view = glm::mat4(1.0f);
 		glm::mat4 projection = glm::mat4(1.0f);
 		//model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
-		projection = glm::perspective(glm::radians(45.0f), aspectRatio, 0.1f, 100.0f);
+		projection = glm::perspective(glm::radians(45.0f), aspectRatio, nearClip, farClip);
 		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 		
 		shaders.setMat4("projection", projection); // note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
@@ -239,8 +239,10 @@ int main()
 
 		ImGui::Begin("TestWindow");
 		ImGui::ColorEdit3("Background Color", (float*)&clear_color);
+		ImGui::DragFloat("Near Clip plane", &nearClip, 0.01f, 0.0f, 0.0f);
+		ImGui::DragFloat("Far Clip plane", &farClip, 0.01f, 0.0f, 0.0f);
 		ImGui::End();
-
+		ImGui::ShowDemoWindow();
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
