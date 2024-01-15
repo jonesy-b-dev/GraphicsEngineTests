@@ -204,7 +204,7 @@ int main()
 		glm::mat4 view = glm::mat4(1.0f);
 		glm::mat4 projection = glm::mat4(1.0f);
 		//model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
-		projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+		projection = glm::perspective(glm::radians(45.0f), aspectRatio, 0.1f, 100.0f);
 		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 		
 		shaders.setMat4("projection", projection); // note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
@@ -272,6 +272,8 @@ int main()
 //Adjusts the window size when resolution is changed
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
+	aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+
 	glViewport(0, 0, width, height);
 }
 

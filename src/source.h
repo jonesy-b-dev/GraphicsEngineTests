@@ -14,8 +14,9 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void printFps(GLFWwindow* window);
 
 // settings
-const unsigned int SCR_WIDTH = 960;
-const unsigned int SCR_HEIGHT = 960;
+unsigned int SCR_WIDTH = 960;
+unsigned int SCR_HEIGHT = 960;
+float aspectRatio = (float)SCR_WIDTH / (float)SCR_HEIGHT;
 
 double previousTime = glfwGetTime();
 int frameCount = 0;
