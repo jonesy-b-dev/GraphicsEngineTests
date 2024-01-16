@@ -26,12 +26,13 @@ void UserInterface::NewFrame()
 
 }
 
-void UserInterface::CreateWindows(ImVec4* clear_color, float* nearClip, float* farClip)
+void UserInterface::CreateSettingsWindow(ImVec4* clear_color, float* nearClip, float* farClip, float* fov)
 {
 	ImGui::Begin("TestWindow");
 	ImGui::ColorEdit3("Background Color", (float*)clear_color);
 	ImGui::DragFloat("Near Clip plane", nearClip, 0.01f, 0.0001f, 1000000000);
 	ImGui::DragFloat("Far Clip plane", farClip, 0.01f, 0.0001f, 1000000000);
+	ImGui::DragFloat("Field of view", fov, 0.1f, -1000.0f, 1000.0f,"%.01f deg");
 	ImGui::End();
 }
 

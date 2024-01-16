@@ -7,7 +7,7 @@ class UserInterface
 public:
 	UserInterface(windowManager window);
 	void NewFrame();
-	void CreateWindows(ImVec4* clear_color, float* nearClip, float* farClip);
+	void CreateSettingsWindow(ImVec4* clear_color, float* nearClip, float* farClip, float* fov);
 	void RenderUI();
 	void DestroyUI();
 };
