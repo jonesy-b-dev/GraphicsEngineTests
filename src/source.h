@@ -8,9 +8,9 @@ void printFps(GLFWwindow* window);
 // settings
 unsigned int SCR_WIDTH = 960;
 unsigned int SCR_HEIGHT = 960;
-float aspectRatio = (float)SCR_WIDTH / (float)SCR_HEIGHT;
 static float nearClip = 0.1f;
 static float farClip = 100.0f;
+float aspectRatio = (float)SCR_WIDTH / (float)SCR_HEIGHT;
 
 
 double previousTime = glfwGetTime();

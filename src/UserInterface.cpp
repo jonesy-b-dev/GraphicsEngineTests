@@ -29,8 +29,8 @@ void UserInterface::CreateWindows(ImVec4* clear_color, float* nearClip, float* f
 {
 	ImGui::Begin("TestWindow");
 	ImGui::ColorEdit3("Background Color", (float*)clear_color);
-	ImGui::DragFloat("Near Clip plane", nearClip, 0.01f, 0.0f, 0.0f);
-	ImGui::DragFloat("Far Clip plane", farClip, 0.01f, 0.0f, 0.0f);
+	ImGui::DragFloat("Near Clip plane", nearClip, 0.01f, 0.0001f, 1000000000);
+	ImGui::DragFloat("Far Clip plane", farClip, 0.01f, 0.0001f, 1000000000);
 	ImGui::End();
 }
 
