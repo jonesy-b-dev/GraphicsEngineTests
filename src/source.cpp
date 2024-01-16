@@ -1,15 +1,19 @@
 //includes all the libs
-#include "source.h"
 #include "shader.h"
 #include "errorHandeling.h"
 #include "InputHandler.h"
 #include "windowManager.h"
-#include "imgui_internal.h"
+#include "UserInterface.h"
+#include "source.h"
+
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
 #include <gtc/type_ptr.hpp>
+#include "glad\glad.h"
+#include "stb_image.h"
+#include <cmath>
+#include <stdio.h>
 
-#define CLASS_NAME L"ben"
 
 int main()
 {
@@ -36,19 +40,12 @@ int main()
 	//Create a input handler
 	InputHandler inputHandler(window.getWindow());
 
-	#pragma region ImGui Init
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-	ImGui::StyleColorsDark();
-	ImGui_ImplGlfw_InitForOpenGL(window.getWindow(), true);
-	ImGui_ImplOpenGL3_Init("#version 460");
-	#pragma endregion
-
-	#pragma endregion
+	//Create UI
+	UserInterface ui(window);
 
 	Shader shaders("src/Shaders/vertexShader.vert", "src/Shaders/fragmentShader.frag"); // you can name your shader files however you like
+
+	#pragma endregion
 
 	#pragma region Buffer Stuff
 	// Create a array to store vertex data
@@ -224,12 +221,8 @@ int main()
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
 
-
 		// ImGui stuff
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
-		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
+		ui.NewFrame();
 
 		glBindVertexArray(VAO);
 		// Draw with EBO
@@ -237,14 +230,9 @@ int main()
 		// Draw arrays
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
-		ImGui::Begin("TestWindow");
-		ImGui::ColorEdit3("Background Color", (float*)&clear_color);
-		ImGui::DragFloat("Near Clip plane", &nearClip, 0.01f, 0.0f, 0.0f);
-		ImGui::DragFloat("Far Clip plane", &farClip, 0.01f, 0.0f, 0.0f);
-		ImGui::End();
-		ImGui::ShowDemoWindow();
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		ui.CreateWindows(&clear_color, &nearClip, &farClip);
+
+		ui.RenderUI();
 
 		glfwSwapBuffers(window.getWindow());
 		// Check for any events
@@ -253,10 +241,6 @@ int main()
 	#pragma endregion
 	
 	#pragma region Clean Up
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplGlfw_Shutdown();
-	ImGui::DestroyContext();
-
 	// Cleanup the resources when programm end
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
