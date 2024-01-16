@@ -36,6 +36,15 @@ project "Engine"
         path.getabsolute("Dependencies/GLFW/lib"),
     }
 
+    vpaths {
+        ["Assets"] = { "***.jpg" },
+        ["Shaders"] = { "**.frag", "**.vert"},
+        ["Headers"] = { "**.h", "**.hpp" },
+        ["Sources"] = {"**.c", "**.cpp"},
+        ["Sources/ImGui"] = {"imgui_*.c", "imgui_*.cpp"},
+        ["Docs"] = { "**.md", "**.ini"}
+    }
+
     filter "configurations:Debug"
         defines { "DEBUG" }
         symbols "On"
