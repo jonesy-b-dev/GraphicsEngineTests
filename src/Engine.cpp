@@ -4,7 +4,8 @@
 #include "InputHandler.h"
 #include "windowManager.h"
 #include "UserInterface.h"
-#include "source.h"
+#include "Engine.h"
+#include "Renderer.h"
 
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
@@ -24,18 +25,10 @@ int main()
 	// Set function to call when window resizes (should be abstracted but vant get it to work fsr)
 	glfwSetFramebufferSizeCallback(window.getWindow(), framebuffer_size_callback);
 	
-	//Init GLAD
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	if (!Renderer::Initialise()) 
 	{
-		printf("Failed to initialize GLAD");
 		return -1;
 	}
-	//Print out OpenGL version to the console
-	printf("%s\n", glGetString(GL_VERSION));
-
-	// configure global opengl state
-	// -----------------------------
-	glEnable(GL_DEPTH_TEST);
 
 	//Create a input handler
 	InputHandler inputHandler(window.getWindow());
