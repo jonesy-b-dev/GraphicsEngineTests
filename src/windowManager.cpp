@@ -32,3 +32,9 @@ windowManager::windowManager(int width, int height, const char* name)
 	glfwMakeContextCurrent(m_window);
 	glfwSwapInterval(0);
 }
+
+void windowManager::KillWindow()
+{
+	glfwTerminate();
+	glfwDestroyWindow(m_window);
+}

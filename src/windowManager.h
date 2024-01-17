@@ -4,8 +4,9 @@ class windowManager
 {
 public:
 	windowManager(int width, int height, const char* name);
-
 	GLFWwindow* m_window;
 	GLFWwindow* getWindow() { return m_window; }
+	
+	void KillWindow();
 };
 
