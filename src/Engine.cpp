@@ -21,12 +21,8 @@ int main()
 	#pragma region Initialisation
 	
 	// Create window
-	windowManager window(SCR_WIDTH, SCR_HEIGHT, "openglgaming");
-	// Set function to call when window resizes (should be abstracted but vant get it to work fsr)
-	glfwSetFramebufferSizeCallback(window.getWindow(), framebuffer_size_callback);
+	windowManager window(SCR_WIDTH, SCR_HEIGHT, "openglgaming", &aspectRatio);
 	
-	Renderer renderer;
-
 	if (!Renderer::Initialise())
 	{
 		return -1;
@@ -177,15 +173,6 @@ int main()
 } 
 
 #pragma region Additional Funcitons
-
-//Adjusts the window size when resolution is changed
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-	//aspectRatio = static_cast<float>(width) / static_cast<float>(height);
-
-	glViewport(0, 0, width, height);
-	glfwSetWindowAspectRatio(window, width, height);
-}
 
 void printFps(GLFWwindow* window)
 {

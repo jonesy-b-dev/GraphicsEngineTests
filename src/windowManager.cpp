@@ -1,8 +1,11 @@
 #include "windowManager.h"
 #include <stdio.h>
 
-windowManager::windowManager(int width, int height, const char* name)
+float* windowManager::m_aspectRatio = 0;
+
+windowManager::windowManager(int width, int height, const char* name, float* aspectRatio)
 {
+	m_aspectRatio = aspectRatio;
 	//Init GLFW
 	glfwInit();
 	// uncomment for (borderless) fullscreen mode 
@@ -27,10 +30,18 @@ windowManager::windowManager(int width, int height, const char* name)
 		glfwTerminate();
 		//return -1;
 	}
-	
+
+	glfwSetFramebufferSizeCallback(m_window, windowManager::framebuffer_size_callback);
 
 	glfwMakeContextCurrent(m_window);
 	glfwSwapInterval(0);
+}
+void windowManager::framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+	*m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+
+	glViewport(0, 0, width, height);
+	//glfwSetWindowAspectRatio(window, width, height);
 }
 
 void windowManager::KillWindow()
