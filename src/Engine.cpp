@@ -27,7 +27,7 @@ int main()
 	
 	Renderer renderer;
 
-	if (!renderer.Initialise())
+	if (!Renderer::Initialise())
 	{
 		return -1;
 	}
@@ -86,8 +86,8 @@ int main()
 		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
 		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
-
-	renderer.CreateBuffers(vertices);
+	size_t size = sizeof(vertices) / sizeof(vertices[0]);
+	Renderer::CreateBuffers(vertices, size);
 	
 	#pragma endregion
 
@@ -147,7 +147,7 @@ int main()
 		// Bind the texture
 		shaders.use();
 
-		renderer.Render(shaders, clear_color, nearClip, farClip, fieldOfView, aspectRatio);
+		Renderer::Render(shaders, clear_color, nearClip, farClip, fieldOfView, aspectRatio);
 
 		// ImGui stuff
 		ui.NewFrame();
@@ -168,12 +168,11 @@ int main()
 	
 	#pragma region Clean Up
 	// Cleanup the resources when programm end
-
+	Renderer::Cleanup();
 
 	// Kill window
 	window.KillWindow();
 	#pragma endregion
-    
 	return 0;
 } 
 
@@ -182,9 +181,10 @@ int main()
 //Adjusts the window size when resolution is changed
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-	aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+	//aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 
 	glViewport(0, 0, width, height);
+	glfwSetWindowAspectRatio(window, width, height);
 }
 
 void printFps(GLFWwindow* window)

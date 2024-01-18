@@ -8,10 +8,10 @@
 class Renderer
 {
 public:
-	bool Initialise();
-	void CreateBuffers(float vertices[]);
-	void Render(Shader shaders, ImVec4 clear_color, float nearClip, float farClip, float fov, float aspectRatio);
-	void Cleanup();
+	static bool Initialise();
+	static void CreateBuffers(float* vertices, size_t size);
+	static void Render(Shader shaders, ImVec4 clear_color, float nearClip, float farClip, float fov, float aspectRatio);
+	static void Cleanup();
 
 	// Create a array to store vertex data
 
@@ -21,5 +21,5 @@ public:
 	//};
 
 	// Create a var to store VBO, VAO and EBO ID
-	unsigned int VBO, VAO, EBO;
+	static unsigned int VBO, VAO, EBO;
 };

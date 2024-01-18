@@ -8,6 +8,10 @@
 
 #include <stdio.h>
 
+// Initialize static members
+unsigned int Renderer::VBO = 0;
+unsigned int Renderer::VAO = 0;
+unsigned int Renderer::EBO = 0;
 
 bool Renderer::Initialise()
 {
@@ -25,7 +29,7 @@ bool Renderer::Initialise()
 	glEnable(GL_DEPTH_TEST);
 }
 
-void Renderer::CreateBuffers(float vertices[])
+void Renderer::CreateBuffers(float* vertices, size_t size)
 {
 	// Generates 1 id for the VBO and stores it in the VBO ID variable
 	glGenVertexArrays(1, &VAO);
@@ -38,13 +42,13 @@ void Renderer::CreateBuffers(float vertices[])
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	// Copy the vertex data into the buffer
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * size, vertices, GL_STATIC_DRAW);
 
 	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	// Position attribute
-	//                 index, size, type, normalized, stride,		pointer
+	//                 index, size, type, normalized, stride,        pointer
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
