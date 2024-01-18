@@ -5,7 +5,7 @@
 class UserInterface
 {
 public:
-	UserInterface(windowManager window);
+	UserInterface(GLFWwindow* window);
 	void NewFrame();
 	void CreateSettingsWindow(ImVec4* clear_color, float* nearClip, float* farClip, float* fov);
 	void RenderUI();

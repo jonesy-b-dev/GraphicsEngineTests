@@ -4,8 +4,9 @@
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
+#include <glfw3.h>
 
-UserInterface::UserInterface(windowManager window)
+UserInterface::UserInterface(GLFWwindow* window)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -13,7 +14,7 @@ UserInterface::UserInterface(windowManager window)
 	(void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 	ImGui::StyleColorsDark();
-	ImGui_ImplGlfw_InitForOpenGL(window.getWindow(), true);
+	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init("#version 460");
 }
 

@@ -1,9 +1,11 @@
 #include "windowManager.h"
 #include <stdio.h>
 
+// Initalise static members
 float* windowManager::m_aspectRatio = 0;
+GLFWwindow* windowManager::m_window = 0;
 
-windowManager::windowManager(int width, int height, const char* name, float* aspectRatio)
+void windowManager::InitWindow(int width, int height, const char* name, float* aspectRatio)
 {
 	m_aspectRatio = aspectRatio;
 	//Init GLFW

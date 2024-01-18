@@ -17,6 +17,7 @@ project "Engine"
         "src/Textures**.jpg",
         "Dependencies/ImGui/**.cpp",
         "Dependencies/ImGui/**.h",
+        "Settings/**.ini"
     }
 
     includedirs {
@@ -37,7 +38,7 @@ project "Engine"
     }
 
     vpaths {
-        ["Assets"] = { "***.jpg" },
+        ["Assets"] = { "**.jpg" },
         ["Shaders"] = { "**.frag", "**.vert"},
         ["Headers"] = { "**.h", "**.hpp" },
         ["Sources"] = {"**.c", "**.cpp"},

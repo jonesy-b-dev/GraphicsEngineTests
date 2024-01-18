@@ -21,7 +21,7 @@ int main()
 	#pragma region Initialisation
 	
 	// Create window
-	windowManager window(SCR_WIDTH, SCR_HEIGHT, "openglgaming", &aspectRatio);
+	windowManager::InitWindow(SCR_WIDTH, SCR_HEIGHT, "openglgaming", &aspectRatio);
 	
 	if (!Renderer::Initialise())
 	{
@@ -29,10 +29,10 @@ int main()
 	}
 
 	//Create a input handler
-	InputHandler inputHandler(window.getWindow());
+	InputHandler inputHandler(windowManager::getWindow());
 
 	//Create UI
-	UserInterface ui(window);
+	UserInterface ui(windowManager::getWindow());
 
 	Shader shaders("src/Shaders/vertexShader.vert", "src/Shaders/fragmentShader.frag"); // you can name your shader files however you like
 
@@ -132,9 +132,9 @@ int main()
 
 	#pragma region Main While Loop
 	//Main while render loop
-	while (!glfwWindowShouldClose(window.getWindow()))
+	while (!glfwWindowShouldClose(windowManager::getWindow()))
 	{
-		printFps(window.getWindow());
+		printFps(windowManager::getWindow());
 
 		// Input
 		inputHandler.processInput();
@@ -156,7 +156,7 @@ int main()
 
 		ui.RenderUI();
 
-		glfwSwapBuffers(window.getWindow());
+		glfwSwapBuffers(windowManager::getWindow());
 		// Check for any events
 		glfwPollEvents();
 	}
@@ -167,7 +167,7 @@ int main()
 	Renderer::Cleanup();
 
 	// Kill window
-	window.KillWindow();
+	windowManager::KillWindow();
 	#pragma endregion
 	return 0;
 } 
