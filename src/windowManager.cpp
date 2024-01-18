@@ -5,6 +5,10 @@
 float* windowManager::m_aspectRatio = 0;
 GLFWwindow* windowManager::m_window = 0;
 
+// Private members
+double windowManager::previousTime = glfwGetTime();
+int windowManager::frameCount = 0;
+
 void windowManager::InitWindow(int width, int height, const char* name, float* aspectRatio)
 {
 	m_aspectRatio = aspectRatio;
@@ -44,6 +48,24 @@ void windowManager::framebuffer_size_callback(GLFWwindow* window, int width, int
 
 	glViewport(0, 0, width, height);
 	//glfwSetWindowAspectRatio(window, width, height);
+}
+
+void windowManager::printFps()
+{
+	double currentTime = glfwGetTime();
+	frameCount++;
+	// If a second has passed.
+	if (currentTime - previousTime >= 1.0)
+	{
+		// Convert frameCount to a string using sprintf_s
+		char titleBuffer[256]; // Adjust the size as needed
+		sprintf_s(titleBuffer, sizeof(titleBuffer), "fps: %d", frameCount);
+
+		glfwSetWindowTitle(m_window, titleBuffer);
+
+		frameCount = 0;
+		previousTime = currentTime;
+	}
 }
 
 void windowManager::KillWindow()

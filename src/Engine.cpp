@@ -7,20 +7,15 @@
 #include "Engine.h"
 #include "Renderer.h"
 
-#include <glm.hpp>
-#include <gtc/matrix_transform.hpp>
-#include <gtc/type_ptr.hpp>
 #include "glad\glad.h"
 #include "stb_image.h"
-#include <cmath>
 #include <stdio.h>
-
 
 int main()
 {
 	#pragma region Initialisation
 	
-	// Create window
+	// Initialise window
 	windowManager::InitWindow(SCR_WIDTH, SCR_HEIGHT, "openglgaming", &aspectRatio);
 	
 	if (!Renderer::Initialise())
@@ -31,8 +26,8 @@ int main()
 	//Create a input handler
 	InputHandler inputHandler(windowManager::getWindow());
 
-	//Create UI
-	UserInterface ui(windowManager::getWindow());
+	//Initialise UI
+	UserInterface::InitUI(windowManager::getWindow());
 
 	Shader shaders("src/Shaders/vertexShader.vert", "src/Shaders/fragmentShader.frag"); // you can name your shader files however you like
 
@@ -113,28 +108,13 @@ int main()
 		printf("Failed to load texture %s", data);
 	}
 	stbi_image_free(data);
-
-	// tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
-// -------------------------------------------------------------------------------------------
 	#pragma endregion
-	glm::vec3 cubePositions[] = {
-		glm::vec3(0.0f,  0.0f,  0.0f),
-		glm::vec3(2.0f,  5.0f, -15.0f),
-		glm::vec3(-1.5f, -2.2f, -2.5f),
-		glm::vec3(-3.8f, -2.0f, -12.3f),
-		glm::vec3(2.4f, -0.4f, -3.5f),
-		glm::vec3(-1.7f,  3.0f, -7.5f),
-		glm::vec3(1.3f, -2.0f, -2.5f),
-		glm::vec3(1.5f,  2.0f, -2.5f),
-		glm::vec3(1.5f,  0.2f, -1.5f),
-		glm::vec3(-1.3f,  1.0f, -1.5f)
-	};
 
 	#pragma region Main While Loop
 	//Main while render loop
 	while (!glfwWindowShouldClose(windowManager::getWindow()))
 	{
-		printFps(windowManager::getWindow());
+		windowManager::printFps();
 
 		// Input
 		inputHandler.processInput();
@@ -144,21 +124,6 @@ int main()
 		shaders.use();
 
 		Renderer::Render(shaders, clear_color, nearClip, farClip, fieldOfView, aspectRatio);
-
-		// ImGui stuff
-		ui.NewFrame();
-
-		// Draw with EBO
-		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		// Draw arrays
-
-		ui.CreateSettingsWindow(&clear_color, &nearClip, &farClip, &fieldOfView);
-
-		ui.RenderUI();
-
-		glfwSwapBuffers(windowManager::getWindow());
-		// Check for any events
-		glfwPollEvents();
 	}
 	#pragma endregion
 	
@@ -170,25 +135,4 @@ int main()
 	windowManager::KillWindow();
 	#pragma endregion
 	return 0;
-} 
-
-#pragma region Additional Funcitons
-
-void printFps(GLFWwindow* window)
-{
-	double currentTime = glfwGetTime();
-	frameCount++;
-	// If a second has passed.
-	if (currentTime - previousTime >= 1.0)
-	{
-		// Convert frameCount to a string using sprintf_s
-		char titleBuffer[256]; // Adjust the size as needed
-		sprintf_s(titleBuffer, sizeof(titleBuffer), "fps: %d", frameCount);
-
-		glfwSetWindowTitle(window, titleBuffer);
-
-		frameCount = 0;
-		previousTime = currentTime;
-	}
 }
-#pragma endregion

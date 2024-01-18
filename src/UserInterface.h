@@ -5,10 +5,10 @@
 class UserInterface
 {
 public:
-	UserInterface(GLFWwindow* window);
-	void NewFrame();
-	void CreateSettingsWindow(ImVec4* clear_color, float* nearClip, float* farClip, float* fov);
-	void RenderUI();
-	void DestroyUI();
+	static void InitUI(GLFWwindow* window);
+	static void NewFrame();
+	static void CreateSettingsWindow(ImVec4* clear_color, float* nearClip, float* farClip, float* fov);
+	static void RenderUI();
+	static void DestroyUI();
 };
 

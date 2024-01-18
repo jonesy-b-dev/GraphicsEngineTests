@@ -1,4 +1,6 @@
 #include "Renderer.h"
+#include "windowManager.h"
+#include "UserInterface.h"
 #include "glad\glad.h"
 #include "glfw3.h"
 #include <glm.hpp>
@@ -117,6 +119,16 @@ void Renderer::Render(Shader shaders, ImVec4 clear_color, float nearClip, float 
 
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 
+	// ImGui stuff
+	UserInterface::NewFrame();
+
+	UserInterface::CreateSettingsWindow(&clear_color, &nearClip, &farClip, &fov);
+
+	UserInterface::RenderUI();
+
+	glfwSwapBuffers(windowManager::getWindow());
+	// Check for any events
+	glfwPollEvents();
 }
 
 void Renderer::Cleanup()

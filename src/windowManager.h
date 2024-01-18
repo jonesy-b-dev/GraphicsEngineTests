@@ -10,5 +10,11 @@ public:
 	static GLFWwindow* getWindow() { return m_window; }
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 	static void KillWindow();
+	static void printFps();
+
+private:
+	static double previousTime;
+	static int frameCount;
+
 };
 

@@ -6,7 +6,7 @@
 #include <imgui_impl_opengl3.h>
 #include <glfw3.h>
 
-UserInterface::UserInterface(GLFWwindow* window)
+void UserInterface::InitUI(GLFWwindow* window)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
