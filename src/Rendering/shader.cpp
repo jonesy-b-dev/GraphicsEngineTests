@@ -4,7 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include "errorHandeling.h"
+#include "../Utils/errorHandeling.h"
 
 Shader::Shader(const char* vertexPath, const char* fragmentPath)
 {

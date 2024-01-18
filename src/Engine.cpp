@@ -1,11 +1,11 @@
 //includes all the libs
-#include "shader.h"
-#include "errorHandeling.h"
-#include "InputHandler.h"
-#include "windowManager.h"
-#include "UserInterface.h"
+#include "Rendering/shader.h"
+#include "Utils/errorHandeling.h"
+#include "Utils/InputHandler.h"
+#include "Rendering/windowManager.h"
+#include "Rendering/UserInterface.h"
 #include "Engine.h"
-#include "Renderer.h"
+#include "Rendering/Renderer.h"
 
 #include "glad\glad.h"
 #include "stb_image.h"

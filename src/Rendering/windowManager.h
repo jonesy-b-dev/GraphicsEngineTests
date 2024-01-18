@@ -1,5 +1,6 @@
 #pragma once
 #include <glfw3.h>
+
 class windowManager
 {
 public:
@@ -17,4 +18,3 @@ private:
 	static int frameCount;
 
 };
-
