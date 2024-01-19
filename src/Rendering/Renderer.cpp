@@ -81,17 +81,19 @@ glm::vec3 cubePositions[] = {
 	glm::vec3(-1.3f,  1.0f, -1.5f)
 };
 
-void Renderer::Render(Shader shaders, ImVec4 clear_color, float nearClip, float farClip, float fov, float aspectRatio)
+void Renderer::Render(Shader shaders, ImVec4* clear_color, float* nearClip, float* farClip, float* fov, float* aspectRatio)
 {
+	ImVec4 clearColor = *clear_color;
+
 	// Render Commands
-	glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+	glClearColor(clearColor.x, clearColor.y, clearColor.z, clearColor.w);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!
 	
 	// create transformations
 		//glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
 	glm::mat4 view = glm::mat4(1.0f);
 	glm::mat4 projection = glm::mat4(1.0f);
-	projection = glm::perspective(glm::radians(fov), aspectRatio, nearClip, farClip);
+	projection = glm::perspective(glm::radians(*fov), *aspectRatio, *nearClip, *farClip);
 	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 
 	shaders.setMat4("projection", projection); // note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
@@ -122,7 +124,7 @@ void Renderer::Render(Shader shaders, ImVec4 clear_color, float nearClip, float 
 	// ImGui stuff
 	UserInterface::NewFrame();
 
-	UserInterface::CreateSettingsWindow(&clear_color, &nearClip, &farClip, &fov);
+	UserInterface::CreateSettingsWindow(clear_color, nearClip, farClip, fov);
 
 	UserInterface::RenderUI();
 

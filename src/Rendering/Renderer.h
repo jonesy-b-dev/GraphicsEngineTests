@@ -10,7 +10,7 @@ class Renderer
 public:
 	static bool Initialise();
 	static void CreateBuffers(float* vertices, size_t size);
-	static void Render(Shader shaders, ImVec4 clear_color, float nearClip, float farClip, float fov, float aspectRatio);
+	static void Render(Shader shaders, ImVec4* clear_color, float* nearClip, float* farClip, float* fov, float* aspectRatio);
 	static void Cleanup();
 
 	// Create a array to store vertex data

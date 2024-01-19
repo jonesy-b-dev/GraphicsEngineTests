@@ -123,7 +123,7 @@ int main()
 		// Bind the texture
 		shaders.use();
 
-		Renderer::Render(shaders, clear_color, nearClip, farClip, fieldOfView, aspectRatio);
+		Renderer::Render(shaders, &clear_color, &nearClip, &farClip, &fieldOfView, &aspectRatio);
 	}
 	#pragma endregion
 	
