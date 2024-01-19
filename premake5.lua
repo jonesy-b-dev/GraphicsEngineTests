@@ -6,6 +6,7 @@ workspace "JonesyEngine"
 project "Engine"
     kind "ConsoleApp"
     language "C++"
+    cppdialect "C++20"
     targetdir ("bin/%{cfg.buildcfg}")
 
     files {
