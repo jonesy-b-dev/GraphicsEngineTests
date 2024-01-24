@@ -1,5 +1,5 @@
 #pragma once
-static class errorHandeling
+class errorHandeling
 {
 public:
 	static void checkShader(unsigned int shader, const char* type);

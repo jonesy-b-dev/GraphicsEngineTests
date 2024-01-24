@@ -3,7 +3,7 @@
 
 // settings
 unsigned int SCR_WIDTH = 1160;
-unsigned int SCR_HEIGHT = 960;
+unsigned int SCR_HEIGHT = 860;
 static float nearClip = 0.1f;
 static float farClip = 100.0f;
 static float fieldOfView = 50.0f;
