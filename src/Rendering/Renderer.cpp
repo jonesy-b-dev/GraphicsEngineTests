@@ -81,9 +81,15 @@ glm::vec3 cubePositions[] = {
 	glm::vec3(-1.3f,  1.0f, -1.5f)
 };
 
-void Renderer::Render(Shader shaders, ImVec4* clear_color, float* nearClip, float* farClip, float* fov, float* aspectRatio)
+void Renderer::Render(Shader shaders, ImVec4* clear_color, float* nearClip, float* farClip, float* fov, float* aspectRatio, float* deltaTime, float* lastFrame, glm::vec3* cameraPos, glm::vec3* cameraFront, glm::vec3* cameraUp)
 {
 	ImVec4 clearColor = *clear_color;
+
+        // per-frame time logic
+        // --------------------
+        float currentFrame = static_cast<float>(glfwGetTime());
+        *deltaTime = currentFrame - *lastFrame;
+        *lastFrame = currentFrame;
 
 	// Render Commands
 	glClearColor(clearColor.x, clearColor.y, clearColor.z, clearColor.w);
@@ -91,13 +97,12 @@ void Renderer::Render(Shader shaders, ImVec4* clear_color, float* nearClip, floa
 	
 	// create transformations
 		//glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-	glm::mat4 view = glm::mat4(1.0f);
-	glm::mat4 projection = glm::mat4(1.0f);
-	projection = glm::perspective(glm::radians(*fov), *aspectRatio, *nearClip, *farClip);
-	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+	glm::mat4 projection = glm::perspective(glm::radians(*fov), *aspectRatio, *nearClip, *farClip);
+	shaders.setMat4("projection", projection);
 
-	shaders.setMat4("projection", projection); // note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
+	glm::mat4 view = glm::lookAt(*cameraPos, *cameraPos + *cameraFront, *cameraUp);
 	shaders.setMat4("view", view);
+
 
 	// render boxes
 	glBindVertexArray(VAO);
@@ -122,11 +127,11 @@ void Renderer::Render(Shader shaders, ImVec4* clear_color, float* nearClip, floa
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 
 	// ImGui stuff
-	UserInterface::NewFrame();
+	//UserInterface::NewFrame();
 
-	UserInterface::CreateSettingsWindow(clear_color, nearClip, farClip, fov);
+	//UserInterface::CreateSettingsWindow(clear_color, nearClip, farClip, fov);
 
-	UserInterface::RenderUI();
+	//UserInterface::RenderUI();
 
 	glfwSwapBuffers(windowManager::getWindow());
 	// Check for any events
