@@ -127,11 +127,11 @@ void Renderer::Render(Shader shaders, ImVec4* clear_color, float* nearClip, floa
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 
 	// ImGui stuff
-	//UserInterface::NewFrame();
+	UserInterface::NewFrame();
 
-	//UserInterface::CreateSettingsWindow(clear_color, nearClip, farClip, fov);
+	UserInterface::CreateSettingsWindow(clear_color, nearClip, farClip, fov);
 
-	//UserInterface::RenderUI();
+	UserInterface::RenderUI();
 
 	glfwSwapBuffers(windowManager::getWindow());
 	// Check for any events
