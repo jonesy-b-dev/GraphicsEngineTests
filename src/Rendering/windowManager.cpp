@@ -67,6 +67,10 @@ void WindowManager::printFps()
 		previousTime = currentTime;
 	}
 }
+void WindowManager::CaptureMouse(bool capture)
+{
+	glfwSetInputMode(m_window, GLFW_CURSOR, capture ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+}
 
 void WindowManager::KillWindow()
 {

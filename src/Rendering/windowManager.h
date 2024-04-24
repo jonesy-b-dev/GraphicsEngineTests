@@ -12,6 +12,7 @@ public:
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 	static void KillWindow();
 	static void printFps();
+	static void CaptureMouse(bool capture);
 
 private:
 	static double previousTime;
