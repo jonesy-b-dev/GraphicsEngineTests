@@ -2,14 +2,14 @@
 #include <stdio.h>
 
 // Initalise static members
-float* windowManager::m_aspectRatio = 0;
-GLFWwindow* windowManager::m_window = 0;
+float* WindowManager::m_aspectRatio = 0;
+GLFWwindow* WindowManager::m_window = 0;
 
 // Private members
-double windowManager::previousTime = glfwGetTime();
-int windowManager::frameCount = 0;
+double WindowManager::previousTime = glfwGetTime();
+int WindowManager::frameCount = 0;
 
-void windowManager::InitWindow(int width, int height, const char* name, float* aspectRatio)
+void WindowManager::InitWindow(int width, int height, const char* name, float* aspectRatio)
 {
 	m_aspectRatio = aspectRatio;
 	//Init GLFW
@@ -37,12 +37,12 @@ void windowManager::InitWindow(int width, int height, const char* name, float* a
 		//return -1;
 	}
 
-	glfwSetFramebufferSizeCallback(m_window, windowManager::framebuffer_size_callback);
+	glfwSetFramebufferSizeCallback(m_window, WindowManager::framebuffer_size_callback);
 
 	glfwMakeContextCurrent(m_window);
 	glfwSwapInterval(0);
 }
-void windowManager::framebuffer_size_callback(GLFWwindow* window, int width, int height)
+void WindowManager::framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
 	*m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 
@@ -50,7 +50,7 @@ void windowManager::framebuffer_size_callback(GLFWwindow* window, int width, int
 	//glfwSetWindowAspectRatio(window, width, height);
 }
 
-void windowManager::printFps()
+void WindowManager::printFps()
 {
 	double currentTime = glfwGetTime();
 	frameCount++;
@@ -68,7 +68,7 @@ void windowManager::printFps()
 	}
 }
 
-void windowManager::KillWindow()
+void WindowManager::KillWindow()
 {
 	glfwTerminate();
 	glfwDestroyWindow(m_window);

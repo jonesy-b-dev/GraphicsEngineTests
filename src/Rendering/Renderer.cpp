@@ -133,7 +133,7 @@ void Renderer::Render(Shader shaders, ImVec4* clear_color, float* nearClip, floa
 
 	UserInterface::RenderUI();
 
-	glfwSwapBuffers(windowManager::getWindow());
+	glfwSwapBuffers(WindowManager::getWindow());
 	// Check for any events
 	glfwPollEvents();
 }

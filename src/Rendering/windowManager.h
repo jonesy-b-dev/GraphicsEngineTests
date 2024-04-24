@@ -1,7 +1,7 @@
 #pragma once
 #include <glfw3.h>
 
-class windowManager
+class WindowManager
 {
 public:
 	static float* m_aspectRatio;
