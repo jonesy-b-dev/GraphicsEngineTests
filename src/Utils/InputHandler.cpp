@@ -1,4 +1,8 @@
 #include "InputHandler.h"
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
+#include "../Rendering/windowManager.h"
 #include <glfw3.h>
 
 InputHandler::InputHandler(GLFWwindow* window) : m_wireframeMode(false), m_wireframeKeyPressed(false), m_window(window) {}
@@ -31,6 +35,14 @@ void InputHandler::processInput()
     }
     if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
     {
-        glfwSetWindowShouldClose(m_window, true);
+        WindowManager::CaptureMouse(false);
+    }
+    if (glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+    {
+        if (!ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow) &&
+            !ImGui::IsAnyItemHovered())
+        {
+            WindowManager::CaptureMouse(true);
+        }
     }
 }

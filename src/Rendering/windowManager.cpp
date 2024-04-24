@@ -4,6 +4,7 @@
 // Initalise static members
 float* WindowManager::m_aspectRatio = 0;
 GLFWwindow* WindowManager::m_window = 0;
+bool WindowManager::mouseCaptured = false;
 
 // Private members
 double WindowManager::previousTime = glfwGetTime();
@@ -29,6 +30,8 @@ void WindowManager::InitWindow(int width, int height, const char* name, float* a
 	//Create window
 	//GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, "OpenGLgamin", primary, NULL);
 	m_window = glfwCreateWindow(width, height, name, NULL, NULL);
+
+	WindowManager::CaptureMouse(true);
 
 	if (m_window == NULL)
 	{
@@ -69,6 +72,7 @@ void WindowManager::printFps()
 }
 void WindowManager::CaptureMouse(bool capture)
 {
+	mouseCaptured = capture;
 	glfwSetInputMode(m_window, GLFW_CURSOR, capture ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
 }
 

@@ -6,6 +6,7 @@ class WindowManager
 public:
 	static float* m_aspectRatio;
 	static GLFWwindow* m_window;
+	static bool mouseCaptured;
 
 	static void InitWindow(int width, int height, const char* name, float* aspectRatio);
 	static GLFWwindow* getWindow() { return m_window; }

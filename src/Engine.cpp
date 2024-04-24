@@ -38,14 +38,14 @@ int main()
 	#pragma region Initialisation
 	
 	// Initialise window
-	windowManager::InitWindow(SCR_WIDTH, SCR_HEIGHT, "openglgaming", &aspectRatio);
+	WindowManager::InitWindow(SCR_WIDTH, SCR_HEIGHT, "openglgaming", &aspectRatio);
 	
-    glfwSetCursorPosCallback(windowManager::getWindow(), mouse_callback);
-    glfwSetScrollCallback(windowManager::getWindow(), scroll_callback);
+    glfwSetCursorPosCallback(WindowManager::getWindow(), mouse_callback);
+    glfwSetScrollCallback(WindowManager::getWindow(), scroll_callback);
 
 
     // tell GLFW to capture our mouse
-    //glfwSetInputMode(windowManager::getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    //glfwSetInputMode(WindowManager::getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	if (!Renderer::Initialise())
 	{
@@ -53,10 +53,10 @@ int main()
 	}
 
 	//Create a input handler
-	InputHandler inputHandler(windowManager::getWindow());
+	InputHandler inputHandler(WindowManager::getWindow());
 
 	//Initialise UI
-	UserInterface::InitUI(windowManager::getWindow());
+	UserInterface::InitUI(WindowManager::getWindow());
 
 	Shader shaders("src/Shaders/vertexShader.vert", "src/Shaders/fragmentShader.frag"); // you can name your shader files however you like
 
@@ -141,13 +141,13 @@ int main()
 
 	#pragma region Main While Loop
 	//Main while render loop
-	while (!glfwWindowShouldClose(windowManager::getWindow()))
+	while (!glfwWindowShouldClose(WindowManager::getWindow()))
 	{
-		windowManager::printFps();
+		WindowManager::printFps();
 
 		// Input
 		inputHandler.processInput();
-		processInput(windowManager::getWindow());
+		processInput(WindowManager::getWindow());
 
 		glBindTexture(GL_TEXTURE_2D, texture);
 		// Bind the texture
@@ -162,7 +162,7 @@ int main()
 	Renderer::Cleanup();
 
 	// Kill window
-	windowManager::KillWindow();
+	WindowManager::KillWindow();
 	#pragma endregion
 	return 0;
 }
