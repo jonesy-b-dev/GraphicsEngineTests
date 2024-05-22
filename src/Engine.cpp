@@ -1,5 +1,6 @@
 //includes all the libs
 #include "Rendering/shader.h"
+#include "Utils/config_loader.h"
 #include "Utils/errorHandeling.h"
 #include "Utils/InputHandler.h"
 #include "Rendering/windowManager.h"
@@ -36,18 +37,15 @@ float lastFrame = 0.0f;
 int main()
 {
 	#pragma region Initialisation
-	
+	Config_loader config("EngineConfig.ini");
 	// Initialise window
 	WindowManager::InitWindow(SCR_WIDTH, SCR_HEIGHT, "openglgaming", &aspectRatio);
 	
-    glfwSetCursorPosCallback(WindowManager::getWindow(), mouse_callback);
-    glfwSetScrollCallback(WindowManager::getWindow(), scroll_callback);
     glfwSetCursorPosCallback(WindowManager::GetWindow(), mouse_callback);
     glfwSetScrollCallback(WindowManager::GetWindow(), scroll_callback);
 
 
     // tell GLFW to capture our mouse
-    //glfwSetInputMode(WindowManager::getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     //glfwSetInputMode(WindowManager::GetWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	if (!Renderer::Initialise())
@@ -56,11 +54,9 @@ int main()
 	}
 
 	//Create a input handler
-	InputHandler inputHandler(WindowManager::getWindow());
 	InputHandler inputHandler(WindowManager::GetWindow());
 
 	//Initialise UI
-	UserInterface::InitUI(WindowManager::getWindow());
 	UserInterface::InitUI(WindowManager::GetWindow());
 
 	Shader shaders("src/Shaders/vertexShader.vert", "src/Shaders/fragmentShader.frag"); // you can name your shader files however you like
@@ -146,14 +142,12 @@ int main()
 
 	#pragma region Main While Loop
 	//Main while render loop
-	while (!glfwWindowShouldClose(WindowManager::getWindow()))
 	while (!glfwWindowShouldClose(WindowManager::GetWindow()))
 	{
 		WindowManager::printFps();
 
 		// Input
 		inputHandler.processInput();
-		processInput(WindowManager::getWindow());
 		processInput(WindowManager::GetWindow());
 
 		glBindTexture(GL_TEXTURE_2D, texture);

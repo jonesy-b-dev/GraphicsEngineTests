@@ -1,4 +1,14 @@
 #include "config_loader.h"
+#include <iostream>
+
+Config_loader::Config_loader(std::string file)
+{
+    configStream.open(file);
+    if (configStream.is_open())
+        std::cout << "Config File open\n";
+    else 
+        std::cout << "Failed to open config file, file: " << file << "\n";
+}
 
 float Config_loader::GetFloat(std::string section, std::string key)
 {
