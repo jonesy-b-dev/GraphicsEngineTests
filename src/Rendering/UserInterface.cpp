@@ -39,7 +39,6 @@ void UserInterface::CreateSettingsWindow(ImVec4* clear_color, float* nearClip, f
 
 void UserInterface::RenderUI()
 {
-	ImGui::ShowDemoWindow();
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
