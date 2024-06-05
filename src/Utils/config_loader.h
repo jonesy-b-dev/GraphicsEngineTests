@@ -21,8 +21,6 @@ public:
 
 private:
 	std::ifstream configStream;
-	std::map<std::string, std::string> Section;
-	std::map<std::string, std::string> Key;
-
+	std::map<std::string, std::map<std::string, std::string>> configData;
 };
 
