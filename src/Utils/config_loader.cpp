@@ -67,7 +67,7 @@ Config_loader::Config_loader(std::string file)
     }
     catch (const std::exception&)
     {
-        std::cout << "Failed to parse config";
+        std::cout << "Failed to parse config on line " << lineNumber << "\n";
     }
 }
 
