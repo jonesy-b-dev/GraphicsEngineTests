@@ -22,5 +22,6 @@ public:
 private:
 	std::ifstream configStream;
 	std::map<std::string, std::map<std::string, std::string>> configData;
+	std::string delimiter = "=";
 };
 

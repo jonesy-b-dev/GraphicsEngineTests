@@ -34,6 +34,7 @@ Config_loader::Config_loader(std::string file)
 
                 if (posStart != std::string::npos && posEnd != std::string::npos)
                 {
+
                     sectionTmp.erase(posEnd, 1);
                     sectionTmp.erase(posStart, 1);
                 }
@@ -44,8 +45,24 @@ Config_loader::Config_loader(std::string file)
                 currentSection = sectionTmp;
             }
             // Get the value for the section
+            if (line[0] != '[' && currentSection != "not set")
+            {
+                size_t pos = line.find(delimiter);
+
+                std::string key = line.substr(0, pos);
+                std::string value = line.substr(pos + delimiter.length());
+
+                //std::cout << "Section: " << currentSection << ",key: " << key << ",val: " << value << "\n";
+
+                configData[currentSection][key] = value;
+
+                //std::cout << configData[currentSection][key] << "\n";
+            }
+            else continue;
 
             // Print stuff for debugging
+            //std::cout << currentSection << "\n";
+            //std::cout << line << "\n";
         }
     }
     catch (const std::exception&)
