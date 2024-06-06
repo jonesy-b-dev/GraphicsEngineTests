@@ -20,6 +20,10 @@ public:
 	void WriteString(std::string, std::string key, std::string value);
 
 private:
+	void GetValueErrorHander(std::string section, std::string key, std::string type, const std::exception& error);
+	void GetValueErrorHander(std::string section, std::string key, std::string type);
+
+private:
 	std::ifstream configStream;
 	std::map<std::string, std::map<std::string, std::string>> configData;
 	std::string delimiter = "=";

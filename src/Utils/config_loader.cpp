@@ -73,23 +73,51 @@ Config_loader::Config_loader(std::string file)
 
 float Config_loader::GetFloat(std::string section, std::string key)
 {
+    try
+    {
         return std::stof(configData[section][key]);
+    }
+    catch(const std::exception& error)
+    {
+        GetValueErrorHander(section, key, "float", error);
+        return 0;
+    }
 }
 
 int Config_loader::GetInt(std::string section, std::string key)
 {
+    try
+    {
         return std::stoi(configData[section][key]);
+    }
+    catch (const std::exception& error)
+    {
+        GetValueErrorHander(section, key, "int", error);
+        return 0;
+    }
 }
 
 bool Config_loader::GetBool(std::string section, std::string key)
 {
     if(configData[section][key] == "true") return true;
     else if(configData[section][key] == "false") return false;
+
+    else GetValueErrorHander(section, key, "bool");
+        
+    return 0;
 }
 
 std::string Config_loader::GetString(std::string section, std::string key)
 {
+    try
+    {
         return configData[section][key];
+    }
+    catch (const std::exception& error)
+    {
+        GetValueErrorHander(section, key, "string", error);
+        return 0;
+    }
 }
 
 void Config_loader::WriteFloat(std::string, std::string key, float value)
@@ -106,4 +134,19 @@ void Config_loader::WriteBool(std::string, std::string key, bool value)
 
 void Config_loader::WriteString(std::string, std::string key, std::string value)
 {
+}
+
+void Config_loader::GetValueErrorHander(std::string section, std::string key, std::string type, const std::exception& error)
+{
+    std::cerr << error.what() << "\n";
+    std::cout << "\nERROR: Failed to get config with type: " << type << " check the config for errors. \n"
+        << "Failed config: [" << section  << "]" << key << "\n"
+        << "Value: " << configData[section][key] << "\n";
+}
+
+void Config_loader::GetValueErrorHander(std::string section, std::string key, std::string type)
+{
+    std::cout << "\nERROR: Failed to get config with type: " << type << " check the config for errors. \n"
+        << "Failed config: [" << section  << "]" << key << "\n"
+        << "Value: " << configData[section][key] << "\n";
 }
