@@ -30,25 +30,22 @@ Config_loader::Config_loader(std::string file)
             {
                 size_t posStart = line.find("[");
                 size_t posEnd = line.find("]");
-                   
+                std::string sectionTmp = line;
 
                 if (posStart != std::string::npos && posEnd != std::string::npos)
                 {
-                    line.erase(posEnd, 1);
-                    line.erase(posStart, 1);
+                    sectionTmp.erase(posEnd, 1);
+                    sectionTmp.erase(posStart, 1);
                 }
                 else
                 {
                     std::cout << "Missing either \"[\" or \"]\" in on line " << lineNumber << "\n";
                 }
-                currentSection = line;
+                currentSection = sectionTmp;
             }
             // Get the value for the section
-            if (line[0] != '[' && currentSection != "not set"); else continue;
 
             // Print stuff for debugging
-            std::cout << currentSection << "\n";
-            std::cout << line << "\n";
         }
     }
     catch (const std::exception&)
