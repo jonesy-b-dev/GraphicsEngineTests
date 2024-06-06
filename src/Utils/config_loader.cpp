@@ -73,22 +73,23 @@ Config_loader::Config_loader(std::string file)
 
 float Config_loader::GetFloat(std::string section, std::string key)
 {
-    return 0.0f;
+        return std::stof(configData[section][key]);
 }
 
 int Config_loader::GetInt(std::string section, std::string key)
 {
-    return 0;
+        return std::stoi(configData[section][key]);
 }
 
 bool Config_loader::GetBool(std::string section, std::string key)
 {
-    return false;
+    if(configData[section][key] == "true") return true;
+    else if(configData[section][key] == "false") return false;
 }
 
 std::string Config_loader::GetString(std::string section, std::string key)
 {
-    return std::string();
+        return configData[section][key];
 }
 
 void Config_loader::WriteFloat(std::string, std::string key, float value)
