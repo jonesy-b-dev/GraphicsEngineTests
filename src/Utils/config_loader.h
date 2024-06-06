@@ -6,25 +6,26 @@
 class Config_loader
 {
 public:
-	Config_loader(std::string file);
+	Config_loader(const char* file);
 	// Get values from config
-	float GetFloat(std::string section, std::string key);
-	int	GetInt(std::string section, std::string key);
-	bool GetBool(std::string section, std::string key);
-	std::string GetString(std::string section, std::string key);
+	float GetFloat(const char* section, const char* key);
+	int	GetInt(const char* section, const char* key);
+	bool GetBool(const char* section, const char* key);
+	std::string GetString(const char* section, const char* key);
 	
 	// Set values in the config
-	void WriteFloat(std::string, std::string key, float value);
-	void WriteInt(std::string, std::string key, int value);
-	void WriteBool(std::string, std::string key, bool value);
-	void WriteString(std::string, std::string key, std::string value);
+	void WriteFloat(const char* section, const char* key, float value);
+	void WriteInt(const char* section, const char* key, int value);
+	void WriteBool(const char* section, const char* key, bool value);
+	void WriteString(const char* section, const char* key, const char* value);
 
 private:
-	void GetValueErrorHander(std::string section, std::string key, std::string type, const std::exception& error);
-	void GetValueErrorHander(std::string section, std::string key, std::string type);
+	void GetValueErrorHander(const char* section, const char* key, const char* type, const std::exception& error);
+	void GetValueErrorHander(const char* section, const char* key, const char* type);
 
 private:
 	std::ifstream m_configStream;
+	const char* m_file;
 	std::map<std::string, std::map<std::string, std::string>> m_configData;
 	std::string m_delimiter = "=";
 };

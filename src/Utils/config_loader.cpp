@@ -1,8 +1,9 @@
 #include "config_loader.h"
 #include <iostream>
 
-Config_loader::Config_loader(std::string file)
+Config_loader::Config_loader(const char* file)
 {
+    m_file = file;  
     // Load the config file
     m_configStream.open(file);
     if (m_configStream.is_open())
@@ -71,7 +72,7 @@ Config_loader::Config_loader(std::string file)
     }
 }
 
-float Config_loader::GetFloat(std::string section, std::string key)
+float Config_loader::GetFloat(const char* section, const char* key)
 {
     try
     {
@@ -84,7 +85,7 @@ float Config_loader::GetFloat(std::string section, std::string key)
     }
 }
 
-int Config_loader::GetInt(std::string section, std::string key)
+int Config_loader::GetInt(const char* section, const char* key)
 {
     try
     {
@@ -97,7 +98,7 @@ int Config_loader::GetInt(std::string section, std::string key)
     }
 }
 
-bool Config_loader::GetBool(std::string section, std::string key)
+bool Config_loader::GetBool(const char* section, const char* key)
 {
     if(m_configData[section][key] == "true") return true;
     else if(m_configData[section][key] == "false") return false;
@@ -107,7 +108,7 @@ bool Config_loader::GetBool(std::string section, std::string key)
     return 0;
 }
 
-std::string Config_loader::GetString(std::string section, std::string key)
+std::string Config_loader::GetString(const char* section, const char* key)
 {
     try
     {
@@ -120,24 +121,24 @@ std::string Config_loader::GetString(std::string section, std::string key)
     }
 }
 
-void Config_loader::WriteFloat(std::string, std::string key, float value)
+void Config_loader::WriteFloat(const char* section, const char* key, float value)
 {
 
 }
 
-void Config_loader::WriteInt(std::string, std::string key, int value)
+void Config_loader::WriteInt(const char* section, const char* key, int value)
 {
 }
 
-void Config_loader::WriteBool(std::string, std::string key, bool value)
+void Config_loader::WriteBool(const char* section, const char* key, bool value)
 {
 }
 
-void Config_loader::WriteString(std::string, std::string key, std::string value)
+void Config_loader::WriteString(const char* section, const char* key, const char* value)
 {
 }
 
-void Config_loader::GetValueErrorHander(std::string section, std::string key, std::string type, const std::exception& error)
+void Config_loader::GetValueErrorHander(const char* section, const char* key, const char* type, const std::exception& error)
 {
     std::cerr << error.what() << "\n";
     std::cout << "\nERROR: Failed to get config with type: " << type << " check the config for errors. \n"
@@ -145,7 +146,7 @@ void Config_loader::GetValueErrorHander(std::string section, std::string key, st
         << "Value: " << m_configData[section][key] << "\n";
 }
 
-void Config_loader::GetValueErrorHander(std::string section, std::string key, std::string type)
+void Config_loader::GetValueErrorHander(const char* section, const char* key, const char* type)
 {
     std::cout << "\nERROR: Failed to get config with type: " << type << " check the config for errors. \n"
         << "Failed config: [" << section  << "]" << key << "\n"
