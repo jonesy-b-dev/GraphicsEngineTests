@@ -24,8 +24,8 @@ private:
 	void GetValueErrorHander(std::string section, std::string key, std::string type);
 
 private:
-	std::ifstream configStream;
-	std::map<std::string, std::map<std::string, std::string>> configData;
-	std::string delimiter = "=";
+	std::ifstream m_configStream;
+	std::map<std::string, std::map<std::string, std::string>> m_configData;
+	std::string m_delimiter = "=";
 };
 
