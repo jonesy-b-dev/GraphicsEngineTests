@@ -204,7 +204,7 @@ int main()
 		shaders.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
 		shaders.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 
-		Renderer::Render(shaders, lightSourceShaders, &clear_color, &nearClip, &farClip, &fieldOfView, &aspectRatio, &deltaTime, &lastFrame, &cameraPos, &cameraFront, &cameraUp);
+		Renderer::Render(&shaders, &lightSourceShaders, &clear_color, &nearClip, &farClip, &fieldOfView, &aspectRatio, &deltaTime, &lastFrame, &cameraPos, &cameraFront, &cameraUp);
 	}
 	#pragma endregion
 	

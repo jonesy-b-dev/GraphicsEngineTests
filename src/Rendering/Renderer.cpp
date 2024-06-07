@@ -87,7 +87,7 @@ glm::vec3 cubePositions[] = {
 	glm::vec3(-1.3f,  1.0f, -1.5f)
 };
 
-void Renderer::Render(Shader shaders, Shader lightShader, ImVec4* clear_color, float* nearClip, float* farClip, float* fov, float* aspectRatio, float* deltaTime, float* lastFrame, glm::vec3* cameraPos, glm::vec3* cameraFront, glm::vec3* cameraUp)
+void Renderer::Render(Shader* shaders, Shader* lightShader, ImVec4* clear_color, float* nearClip, float* farClip, float* fov, float* aspectRatio, float* deltaTime, float* lastFrame, glm::vec3* cameraPos, glm::vec3* cameraFront, glm::vec3* cameraUp)
 {
 	ImVec4 clearColor = *clear_color;
 
@@ -103,14 +103,14 @@ void Renderer::Render(Shader shaders, Shader lightShader, ImVec4* clear_color, f
 	// create transformations
 		//glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
 	glm::mat4 projection = glm::perspective(glm::radians(*fov), *aspectRatio, *nearClip, *farClip);
-	shaders.setMat4("projection", projection);
+	*shaders.setMat4("projection", projection);
 
 	glm::mat4 view = glm::lookAt(*cameraPos, *cameraPos + *cameraFront, *cameraUp);
 	shaders.setMat4("view", view);
 
 
 	// render boxes
-	glm::mat3 model = glm::mat4(1.0f);
+	glm::mat4 model = glm::mat4(1.0f);
 	shaders.setMat4("model", model);
 
 	glBindVertexArray(VAO);
