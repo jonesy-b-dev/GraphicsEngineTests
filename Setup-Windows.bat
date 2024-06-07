@@ -15,7 +15,7 @@ echo gmake2
 echo xcode4
 echo codelite
 
-set /p choice="Enter your choice (e.g., 1 for vs2022): "
+set /p choice="Enter your choice (e.g, vs2022): "
 
 
 :: Get the selected IDE from the array
