@@ -202,7 +202,7 @@ int main()
 		//glBindTexture(GL_TEXTURE_2D, texture);
 		// Bind the texture
 
-		Renderer::Render(&shaders, &lightSourceShaders, &clear_color, &nearClip, &farClip, &fieldOfView, &aspectRatio, &deltaTime, &lastFrame, &cameraPos, &cameraFront, &cameraUp);
+		Renderer::Render(shaders, lightSourceShaders, &clear_color, &nearClip, &farClip, &fieldOfView, &aspectRatio, &deltaTime, &lastFrame, &cameraPos, &cameraFront, &cameraUp);
 	}
 	#pragma endregion
 	
