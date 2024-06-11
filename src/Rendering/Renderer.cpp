@@ -108,6 +108,7 @@ void Renderer::Render(Shader shaders, Shader lightShader, ImVec4* clear_color, f
 	shaders.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
 	shaders.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 	shaders.setVec3("lightPos", lightPos);
+	shaders.setVec3("viewPos", *cameraPos);
 
 	// create transformations
 		//glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
