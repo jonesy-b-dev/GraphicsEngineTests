@@ -13,6 +13,7 @@ unsigned int Renderer::VBO = 0;
 unsigned int Renderer::VAO = 0;
 unsigned int Renderer::lightVAO = 0;
 unsigned int Renderer::EBO = 0;
+glm::vec3 Renderer::lightPos(1.2f, 1.0f, 2.0f);
 
 bool Renderer::Initialise()
 {
@@ -48,12 +49,13 @@ void Renderer::CreateBuffers(float* vertices, size_t size)
 
 	// Position attribute
 	//                 index, size, type, normalized, stride,        pointer
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	// color attribute
-	//glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-	//glEnableVertexAttribArray(1);
+
+	// Normal attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	// Texture coord attribute
 	//glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
@@ -66,7 +68,7 @@ void Renderer::CreateBuffers(float* vertices, size_t size)
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
 	//Position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
 	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
@@ -105,6 +107,7 @@ void Renderer::Render(Shader shaders, Shader lightShader, ImVec4* clear_color, f
 	shaders.use();
 	shaders.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
 	shaders.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+	shaders.setVec3("lightPos", lightPos);
 
 	// create transformations
 		//glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
@@ -142,7 +145,7 @@ void Renderer::Render(Shader shaders, Shader lightShader, ImVec4* clear_color, f
 	lightShader.setMat4("view", view);
 
     model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(1.2f, 1.0f, 2.0f));
+    model = glm::translate(model, lightPos);
     model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
 	lightShader.setMat4("model", model);
 

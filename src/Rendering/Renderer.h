@@ -20,5 +20,6 @@ public:
 	//};
 
 	// Create a var to store VBO, VAO and EBO ID
+	static glm::vec3 lightPos;
 	static unsigned int VBO, VAO, lightVAO, EBO;
 };
