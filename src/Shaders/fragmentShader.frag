@@ -3,8 +3,8 @@ out vec4 FragColor;
 
 //in vec3 ourColor;
 //in vec2 TextCoord;
-in vec3 objectColor;
-in vec3 lightColor;
+uniform vec3 objectColor;
+uniform vec3 lightColor;
 
 // texture sampler
 //uniform sampler2D texture1;

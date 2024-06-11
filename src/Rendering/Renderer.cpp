@@ -63,6 +63,8 @@ void Renderer::CreateBuffers(float* vertices, size_t size)
 	glGenVertexArrays(1, &lightVAO);
 	glBindVertexArray(lightVAO);
 
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
 	//Position attribute
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
@@ -99,7 +101,11 @@ void Renderer::Render(Shader shaders, Shader lightShader, ImVec4* clear_color, f
 	// Render Commands
 	glClearColor(clearColor.x, clearColor.y, clearColor.z, clearColor.w);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
-	
+
+	shaders.use();
+	shaders.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
+	shaders.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+
 	// create transformations
 		//glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
 	glm::mat4 projection = glm::perspective(glm::radians(*fov), *aspectRatio, *nearClip, *farClip);
@@ -110,7 +116,7 @@ void Renderer::Render(Shader shaders, Shader lightShader, ImVec4* clear_color, f
 
 
 	// render boxes
-	glm::mat3 model = glm::mat4(1.0f);
+	glm::mat4 model = glm::mat4(1.0f);
 	shaders.setMat4("model", model);
 
 	glBindVertexArray(VAO);
@@ -132,7 +138,7 @@ void Renderer::Render(Shader shaders, Shader lightShader, ImVec4* clear_color, f
 	//}
 
 	lightShader.use();
-	lightShader.setMat4("projecttion", projection);
+	lightShader.setMat4("projection", projection);
 	lightShader.setMat4("view", view);
 
     model = glm::mat4(1.0f);

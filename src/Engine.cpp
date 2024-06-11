@@ -38,10 +38,11 @@ float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
 
 int main()
-{
+{   
 	#pragma region Initialisation
+
 	Config_loader config("EngineConfig.ini");
-	std::cout << config.GetBool("window", "fullscreen") << "\n";
+	//std::cout << config.GetBool("window", "fullscreen") << "\n";
 	// Initialise window
 	WindowManager::InitWindow(SCR_WIDTH, SCR_HEIGHT, "openglgaming", &aspectRatio);
 	
@@ -200,9 +201,6 @@ int main()
 
 		//glBindTexture(GL_TEXTURE_2D, texture);
 		// Bind the texture
-		shaders.use();
-		shaders.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
-		shaders.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 
 		Renderer::Render(shaders, lightSourceShaders, &clear_color, &nearClip, &farClip, &fieldOfView, &aspectRatio, &deltaTime, &lastFrame, &cameraPos, &cameraFront, &cameraUp);
 	}
