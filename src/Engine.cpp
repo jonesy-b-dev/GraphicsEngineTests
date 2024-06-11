@@ -11,6 +11,7 @@
 #include "glad\glad.h"
 #include "stb_image.h"
 #include <stdio.h>
+#include <iostream>
 
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -22,6 +23,8 @@ void processInput(GLFWwindow* window);
 glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f, 3.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f, 0.0f);
+
+glm::vec3 lightPos = glm::vec3(1.2f, 1.0f, 2.0f);
 
 bool firstMouse = true;
 float yaw   = -90.0f;	// yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right so we initially rotate a bit to the left.
@@ -35,9 +38,11 @@ float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
 
 int main()
-{
+{   
 	#pragma region Initialisation
+
 	Config_loader config("EngineConfig.ini");
+	//std::cout << config.GetBool("window", "fullscreen") << "\n";
 	// Initialise window
 	WindowManager::InitWindow(SCR_WIDTH, SCR_HEIGHT, "openglgaming", &aspectRatio);
 	
@@ -60,52 +65,97 @@ int main()
 	UserInterface::InitUI(WindowManager::GetWindow());
 
 	Shader shaders("src/Shaders/vertexShader.vert", "src/Shaders/fragmentShader.frag"); // you can name your shader files however you like
+	Shader lightSourceShaders("src/Shaders/lightsource.vert", "src/Shaders/lightsource.frag");
 
 	#pragma endregion
 
 	#pragma region Buffer Stuff
+//	float vertices[] = {
+//		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+//		 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+//		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+//		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+//		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+//		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+//
+//		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+//		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+//		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+//		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+//		-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+//		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+//
+//		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+//		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+//		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+//		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+//		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+//		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+//
+//		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+//		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+//		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+//		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+//		 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+//		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+//
+//		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+//		 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+//		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+//		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+//		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+//		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+//
+//		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+//		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+//		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+//		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+//		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+//		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+//	};
 	float vertices[] = {
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-		 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+	//  Vertex position		  Normal data
+	    -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	     0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 
+	     0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 
+	     0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 
+	    -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 
+	    -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 
+	
+	    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	     0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	     0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	     0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	    -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	
+	    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+	    -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+	    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+	    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+	    -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+	    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+	
+	     0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+	     0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+	     0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+	     0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+	     0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+	     0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+	
+	    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+	     0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+	     0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+	     0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+	    -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+	    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+	
+	    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+	     0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+	     0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+	     0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+	    -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+	    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
 	};
 	size_t size = sizeof(vertices) / sizeof(vertices[0]);
 	Renderer::CreateBuffers(vertices, size);
@@ -113,31 +163,31 @@ int main()
 	#pragma endregion
 
 	#pragma region Textures
-	unsigned int texture;
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
-	// Set the wrapping params
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	// Set the filtering params
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	//Load the image, create the texure and generate mipmaps
-	int width, height, nrChannels;
-
-	unsigned char* data = stbi_load("src/Textures/tom.jpg", &width, &height, &nrChannels, 0);
-
-	if (data)
-	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		printf("Failed to load texture %s", data);
-	}
-	stbi_image_free(data);
+//	unsigned int texture;
+//	glGenTextures(1, &texture);
+//	glBindTexture(GL_TEXTURE_2D, texture); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
+//	// Set the wrapping params
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+//	// Set the filtering params
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//
+//	//Load the image, create the texure and generate mipmaps
+//	int width, height, nrChannels;
+//
+//	unsigned char* data = stbi_load("src/Textures/tom.jpg", &width, &height, &nrChannels, 0);
+//
+//	if (data)
+//	{
+//		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+//		glGenerateMipmap(GL_TEXTURE_2D);
+//	}
+//	else
+//	{
+//		printf("Failed to load texture %s", data);
+//	}
+//	stbi_image_free(data);
 	#pragma endregion
 
 	#pragma region Main While Loop
@@ -150,11 +200,10 @@ int main()
 		inputHandler.processInput();
 		processInput(WindowManager::GetWindow());
 
-		glBindTexture(GL_TEXTURE_2D, texture);
+		//glBindTexture(GL_TEXTURE_2D, texture);
 		// Bind the texture
-		shaders.use();
 
-		Renderer::Render(shaders, &clear_color, &nearClip, &farClip, &fieldOfView, &aspectRatio, &deltaTime, &lastFrame, &cameraPos, &cameraFront, &cameraUp);
+		Renderer::Render(shaders, lightSourceShaders, &clear_color, &nearClip, &farClip, &fieldOfView, &aspectRatio, &deltaTime, &lastFrame, &cameraPos, &cameraFront, &cameraUp);
 	}
 	#pragma endregion
 	

@@ -10,7 +10,7 @@ class Renderer
 public:
 	static bool Initialise();
 	static void CreateBuffers(float* vertices, size_t size);
-	static void Render(Shader shaders, ImVec4* clear_color, float* nearClip, float* farClip, float* fov, float* aspectRatio, float* deltaTime, float* lastFrame, glm::vec3* cameraPos, glm::vec3* cameraFront, glm::vec3* cameraUp);
+	static void Render(Shader shaders, Shader lightShader, ImVec4* clear_color, float* nearClip, float* farClip, float* fov, float* aspectRatio, float* deltaTime, float* lastFrame, glm::vec3* cameraPos, glm::vec3* cameraFront, glm::vec3* cameraUp);
 	static void Cleanup();
 	// Create a array to store vertex data
 
@@ -20,5 +20,6 @@ public:
 	//};
 
 	// Create a var to store VBO, VAO and EBO ID
-	static unsigned int VBO, VAO, EBO;
+	static glm::vec3 lightPos;
+	static unsigned int VBO, VAO, lightVAO, EBO;
 };
