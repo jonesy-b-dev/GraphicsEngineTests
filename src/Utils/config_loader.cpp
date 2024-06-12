@@ -72,6 +72,9 @@ Config_loader::Config_loader(const char* file)
     }
 }
 
+//
+// GETTING CONFIGS
+//
 float Config_loader::GetFloat(const char* section, const char* key)
 {
     try
@@ -121,21 +124,115 @@ std::string Config_loader::GetString(const char* section, const char* key)
     }
 }
 
+//
+// WRITING CONFIGS
+//
 void Config_loader::WriteFloat(const char* section, const char* key, float value)
 {
+    m_configData[section][key] = std::to_string(value);
 
+    std::ofstream configFile(m_file);
+
+    if (!configFile.is_open())
+    {
+        std::cout << "Failed to open config file for writing float.\n" <<
+            "Config to edit: [" << section << "]" << key << " = " << value << std::endl;
+        return;
+    }
+
+    for (const auto& section : m_configData) 
+    {
+        configFile << "[" << section.first << "]\n";
+        for (const auto& keyValue : section.second) 
+        {
+            configFile << keyValue.first << "=" << keyValue.second << "\n";
+        }
+
+        configFile << "\n"; // Add a blank line between sections
+    }
+    // Close file
+    configFile.close();
 }
 
 void Config_loader::WriteInt(const char* section, const char* key, int value)
 {
+    m_configData[section][key] = std::to_string(value);
+
+    std::ofstream configFile(m_file);
+
+    if (!configFile.is_open())
+    {
+        std::cout << "Failed to open config file for writing int.\n" <<
+            "Config to edit: [" << section << "]" << key << " = " << value << std::endl;
+        return;
+    }
+
+    for (const auto& section : m_configData) 
+    {
+        configFile << "[" << section.first << "]\n";
+        for (const auto& keyValue : section.second) 
+        {
+            configFile << keyValue.first << "=" << keyValue.second << "\n";
+        }
+
+        configFile << "\n"; // Add a blank line between sections
+    }
+    // Close file
+    configFile.close();
 }
 
 void Config_loader::WriteBool(const char* section, const char* key, bool value)
 {
+    m_configData[section][key] = std::to_string(value);
+
+    std::ofstream configFile(m_file);
+
+    if (!configFile.is_open())
+    {
+        std::cout << "Failed to open config file for writing bool.\n" <<
+            "Config to edit: [" << section << "]" << key << " = " << value << std::endl;
+        return;
+    }
+
+    for (const auto& section : m_configData) 
+    {
+        configFile << "[" << section.first << "]\n";
+        for (const auto& keyValue : section.second) 
+        {
+            configFile << keyValue.first << "=" << keyValue.second << "\n";
+        }
+
+        configFile << "\n"; // Add a blank line between sections
+    }
+    // Close file
+    configFile.close();
 }
 
 void Config_loader::WriteString(const char* section, const char* key, const char* value)
 {
+    m_configData[section][key] = value;
+
+    std::ofstream configFile(m_file);
+
+    if (!configFile.is_open())
+    {
+        std::cout << "Failed to open config file for writing string.\n" <<
+            "Config to edit: [" << section << "]" << key << " = " << value << std::endl;
+        return;
+    }
+
+    for (const auto& section : m_configData) 
+    {
+        configFile << "[" << section.first << "]\n";
+        for (const auto& keyValue : section.second) 
+        {
+            configFile << keyValue.first << "=" << keyValue.second << "\n";
+        }
+
+        configFile << "\n"; // Add a blank line between sections
+    }
+    // Close file
+    configFile.close();
 }
 
 void Config_loader::GetValueErrorHander(const char* section, const char* key, const char* type, const std::exception& error)
