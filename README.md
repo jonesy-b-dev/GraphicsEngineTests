@@ -6,7 +6,7 @@ I probaly wont achieve anything with it but might get some cool features one day
 * Install premake5 if you haven't already
 * Clone the repository
 * Open the folder in a termial
-* Run `premake5 [your editor, {check premake docs)]`
+* Run `premake5 [your editor, {check premake docs}]`
 * Application should be ready to use now, if not please make an issue
 
 ## Current progress
@@ -18,24 +18,24 @@ I probaly wont achieve anything with it but might get some cool features one day
 * Fps counter
 * Simple input handler
 * Resizable window
+* Full 3D camera control
+* Simple phong lighting
 
 # 3D rendering
 ![Engine_x9SXcrubkJ-ezgif com-optimize (4)](https://github.com/jonesy-b-dev/GraphicsEngineTests/assets/59418915/af79d7a7-b921-4f42-97fc-860953311d19)
 
+![image](https://github.com/jonesy-b-dev/GraphicsEngineTests/assets/59418915/391e70c2-24d4-4db2-a6b5-877455612622)
 
-
-
-![image](https://github.com/jonesy-b-dev/GraphicsEngineTests/assets/59418915/cace4099-4fc9-4fea-84b6-13e072f49cfb)
 
 ## Stuff I want to implement
 * ✅Textures
 * ✅Basic 3D rendering
-* Camera controls
-* Basic lighting
+* ✅Camera controls
+* ✅Basic lighting
 * ✅Docking ImGui
 * Model loading
 * Some kind of physics
 
 ### Future
 I'll be mainly testing and learning in this project
-I hope to make a somewhat proper render engine/game engine later when im smart.
+[Stellar Engine](https://github.com/OuterCelestics/StellarEngine) is the engine I'm more actively developing
