@@ -1,13 +1,17 @@
 #pragma once
+#include "./Utils/config_loader.h"
+#include <glm.hpp>
+#include <imgui.h>
+
 #define STB_IMAGE_IMPLEMENTATION
 
+Config_loader config("EngineConfig.ini");
+
 // settings
-unsigned int SCR_WIDTH = 1160;
-unsigned int SCR_HEIGHT = 860;
 float nearClip = 0.1f;
 float farClip = 100.0f;
 float fieldOfView = 50.0f;
-float aspectRatio = (float)SCR_WIDTH / (float)SCR_HEIGHT;
+float aspectRatio = config.GetFloat("window", "width") / config.GetFloat("window", "height");
 
 // camera
 glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f, 3.0f);
@@ -26,18 +30,6 @@ float fov   =  45.0f;
 // timing
 float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
-
-
-struct WindowSettings
-{
-	unsigned int screenWidth = 1160;
-	unsigned int screenHeight = 860;
-};
-
-struct CameraSettings
-{
-
-};
 
 // Background color values 
 ImVec4 clear_color = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);

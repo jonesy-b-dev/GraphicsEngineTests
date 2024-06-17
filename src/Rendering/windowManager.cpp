@@ -5,14 +5,17 @@
 float* WindowManager::m_aspectRatio = 0;
 GLFWwindow* WindowManager::m_window = 0;
 bool WindowManager::mouseCaptured = false;
+Config_loader* WindowManager::m_config = nullptr;
 
 // Private members
 double WindowManager::previousTime = glfwGetTime();
 int WindowManager::frameCount = 0;
 
-void WindowManager::InitWindow(int width, int height, const char* name, float* aspectRatio)
+void WindowManager::InitWindow(int width, int height, const char* name, float* aspectRatio, Config_loader* config)
 {
 	m_aspectRatio = aspectRatio;
+	m_config = config;
+	
 	//Init GLFW
 	glfwInit();
 	// uncomment for (borderless) fullscreen mode 
@@ -48,6 +51,9 @@ void WindowManager::InitWindow(int width, int height, const char* name, float* a
 void WindowManager::framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
 	*m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+	// Write new values to config
+	m_config->WriteInt("window", "width", width);
+	m_config->WriteInt("window", "height", height);
 
 	glViewport(0, 0, width, height);
 	//glfwSetWindowAspectRatio(window, width, height);

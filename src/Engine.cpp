@@ -22,20 +22,12 @@ int main()
 {   
 	#pragma region Initialisation
 
-	Config_loader config("EngineConfig.ini");
 	//std::cout << config.GetBool("window", "fullscreen") << "\n";
 	// Initialise window
-	WindowManager::InitWindow(SCR_WIDTH, SCR_HEIGHT, "openglgaming", &aspectRatio);
+	WindowManager::InitWindow(config.GetInt("window", "width"), config.GetInt("window", "height"), "openglgaming", &aspectRatio, &config);
 	
     glfwSetCursorPosCallback(WindowManager::GetWindow(), mouse_callback);
     glfwSetScrollCallback(WindowManager::GetWindow(), scroll_callback);
-
-
-	/// Test config
-	std::cout << config.GetInt("window", "height") << "\n";
-	config.WriteInt("window", "height", 200);
-	std::cout << config.GetInt("window", "height") << "\n";
-
 
     // tell GLFW to capture our mouse
     //glfwSetInputMode(WindowManager::GetWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
