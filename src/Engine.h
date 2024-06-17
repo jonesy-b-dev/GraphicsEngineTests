@@ -8,9 +8,9 @@
 Config_loader config("EngineConfig.ini");
 
 // settings
-float nearClip = 0.1f;
-float farClip = 100.0f;
-float fieldOfView = 50.0f;
+float nearClip = config.GetFloat("camera", "nearClip");
+float farClip = config.GetFloat("camera", "farClip");
+float fieldOfView = config.GetFloat("camera", "fov");
 float aspectRatio = config.GetFloat("window", "width") / config.GetFloat("window", "height");
 
 // camera

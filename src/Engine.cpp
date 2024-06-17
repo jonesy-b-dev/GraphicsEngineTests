@@ -17,6 +17,7 @@
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
+void OnApplicationQuit();
 
 int main()
 {   
@@ -187,14 +188,25 @@ int main()
 	#pragma endregion
 	
 	#pragma region Clean Up
-	// Cleanup the resources when programm end
+	// Cleanup the render related resources when programm end
 	Renderer::Cleanup();
+	
+	// Clean up any application resources and write final values to config
+	OnApplicationQuit();
 
 	// Kill window
 	WindowManager::KillWindow();
 	#pragma endregion
 	return 0;
 }
+
+void OnApplicationQuit()
+{
+	config.WriteFloat("camera", "nearClip", nearClip);
+	config.WriteFloat("camera", "farClip", farClip);
+	config.WriteFloat("camera", "fov", fieldOfView);
+}
+
 void processInput(GLFWwindow *window)
 {
     float cameraSpeed = static_cast<float>(2.5 * deltaTime);
