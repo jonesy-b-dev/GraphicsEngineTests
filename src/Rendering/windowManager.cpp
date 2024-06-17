@@ -11,7 +11,7 @@ Config_loader* WindowManager::m_config = nullptr;
 double WindowManager::previousTime = glfwGetTime();
 int WindowManager::frameCount = 0;
 
-void WindowManager::InitWindow(int width, int height, const char* name, float* aspectRatio, Config_loader* config)
+void WindowManager::InitWindow(int width, int height, std::string name, float* aspectRatio, Config_loader* config)
 {
 	m_aspectRatio = aspectRatio;
 	m_config = config;
@@ -32,7 +32,7 @@ void WindowManager::InitWindow(int width, int height, const char* name, float* a
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //Use core profile
 	//Create window
 	//GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, "OpenGLgamin", primary, NULL);
-	m_window = glfwCreateWindow(width, height, name, NULL, NULL);
+	m_window = glfwCreateWindow(width, height, name.c_str(), NULL, NULL);
 
 	WindowManager::CaptureMouse(true);
 

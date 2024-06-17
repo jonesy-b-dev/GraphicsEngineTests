@@ -25,7 +25,7 @@ int main()
 
 	//std::cout << config.GetBool("window", "fullscreen") << "\n";
 	// Initialise window
-	WindowManager::InitWindow(config.GetInt("window", "width"), config.GetInt("window", "height"), "openglgaming", &aspectRatio, &config);
+	WindowManager::InitWindow(config.GetInt("window", "width"), config.GetInt("window", "height"), config.GetString("window", "windowName"), &aspectRatio, &config);
 	
     glfwSetCursorPosCallback(WindowManager::GetWindow(), mouse_callback);
     glfwSetScrollCallback(WindowManager::GetWindow(), scroll_callback);
@@ -50,49 +50,6 @@ int main()
 	#pragma endregion
 
 	#pragma region Buffer Stuff
-//	float vertices[] = {
-//		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-//		 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-//		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-//		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-//		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-//		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-//
-//		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-//		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-//		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-//		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-//		-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-//		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-//
-//		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-//		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-//		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-//		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-//		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-//		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-//
-//		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-//		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-//		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-//		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-//		 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-//		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-//
-//		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-//		 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-//		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-//		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-//		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-//		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-//
-//		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-//		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-//		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-//		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-//		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-//		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-//	};
 	float vertices[] = {
 	//  Vertex position		  Normal data
 	    -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
