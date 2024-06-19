@@ -110,17 +110,19 @@ void Renderer::Render(Shader shaders, Shader lightShader, ImVec4* clear_color, f
 	shaders.setVec3("lightPos", lightPos);
 	shaders.setVec3("viewPos", *cameraPos);
 
-	// create transformations
-		//glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
 	glm::mat4 projection = glm::perspective(glm::radians(*fov), *aspectRatio, *nearClip, *farClip);
 	shaders.setMat4("projection", projection);
 
 	glm::mat4 view = glm::lookAt(*cameraPos, *cameraPos + *cameraFront, *cameraUp);
 	shaders.setMat4("view", view);
 
-
 	// render boxes
 	glm::mat4 model = glm::mat4(1.0f);
+
+	float angle = 0.0f;
+	angle = glfwGetTime() * 25.0f;
+	model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+
 	shaders.setMat4("model", model);
 
 	glBindVertexArray(VAO);
