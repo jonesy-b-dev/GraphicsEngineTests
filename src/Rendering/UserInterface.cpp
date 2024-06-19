@@ -11,6 +11,7 @@ void UserInterface::InitUI(GLFWwindow* window)
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); 
+	io.IniFilename = "imgui.ini";
 	(void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 	ImGui::StyleColorsDark();
