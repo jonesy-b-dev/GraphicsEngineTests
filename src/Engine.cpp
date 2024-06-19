@@ -201,6 +201,7 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 		lastY = ypos;
 
 		float sensitivity = 0.1f; // change this value to your liking
+		sensitivity = 0.1f; // change this value to your liking
 		xoffset *= sensitivity;
 		yoffset *= sensitivity;
 

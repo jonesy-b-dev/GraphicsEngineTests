@@ -12,6 +12,7 @@ float nearClip = config.GetFloat("camera", "nearClip");
 float farClip = config.GetFloat("camera", "farClip");
 float fieldOfView = config.GetFloat("camera", "fov");
 float aspectRatio = config.GetFloat("window", "width") / config.GetFloat("window", "height");
+float sensitivity = config.GetFloat("mouse", "sensitivity") / 10;
 
 // camera
 glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f, 3.0f);
