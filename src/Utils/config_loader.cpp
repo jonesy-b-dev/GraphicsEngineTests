@@ -29,13 +29,15 @@ Config_loader::Config_loader(const char* file)
             // Set the current section if we find a [
             if (line[0] == '[')
             {
+                // store the position of the first and last character 
                 size_t posStart = line.find("[");
                 size_t posEnd = line.find("]");
                 std::string sectionTmp = line;
 
+                // First check if the characters were found and then remove the [ ] characters
+                // so we have a clean value to store in $currentSection
                 if (posStart != std::string::npos && posEnd != std::string::npos)
                 {
-
                     sectionTmp.erase(posEnd, 1);
                     sectionTmp.erase(posStart, 1);
                 }
@@ -48,13 +50,16 @@ Config_loader::Config_loader(const char* file)
             // Get the value for the section
             if (line[0] != '[' && currentSection != "not set")
             {
+                // Store the position of the delimiter ( = )
                 size_t pos = line.find(m_delimiter);
 
+                // store the key and value in a temp string
                 std::string key = line.substr(0, pos);
                 std::string value = line.substr(pos + m_delimiter.length());
 
                 //std::cout << "Section: " << currentSection << ",key: " << key << ",val: " << value << "\n";
-
+                    
+                // Store the values in the map
                 m_configData[currentSection][key] = value;
 
                 //std::cout << m_configData[currentSection][key] << "\n";
