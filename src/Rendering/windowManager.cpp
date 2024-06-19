@@ -51,13 +51,16 @@ bool WindowManager::InitWindow(int width, int height, std::string name, float* a
 }
 void WindowManager::framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-	*m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
-	// Write new values to config
-	m_config->WriteInt("window", "width", width);
-	m_config->WriteInt("window", "height", height);
+	if (width == 0 || height == 0)
+	{
+		*m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+		// Write new values to config
+		m_config->WriteInt("window", "width", width);
+		m_config->WriteInt("window", "height", height);
 
-	glViewport(0, 0, width, height);
-	//glfwSetWindowAspectRatio(window, width, height);
+		glViewport(0, 0, width, height);
+		//glfwSetWindowAspectRatio(window, width, height);
+	}
 }
 
 void WindowManager::printFps()
