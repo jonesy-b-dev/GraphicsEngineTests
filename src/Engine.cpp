@@ -25,7 +25,10 @@ int main()
 
 	//std::cout << config.GetBool("window", "fullscreen") << "\n";
 	// Initialise window
-	WindowManager::InitWindow(config.GetInt("window", "width"), config.GetInt("window", "height"), config.GetString("window", "windowName"), &aspectRatio, &config);
+	if (!WindowManager::InitWindow(config.GetInt("window", "width"), config.GetInt("window", "height"), config.GetString("window", "windowName"), &aspectRatio, &config))
+	{
+		return -1;
+	}
 	
     glfwSetCursorPosCallback(WindowManager::GetWindow(), mouse_callback);
     glfwSetScrollCallback(WindowManager::GetWindow(), scroll_callback);

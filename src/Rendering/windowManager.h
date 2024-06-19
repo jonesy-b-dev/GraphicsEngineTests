@@ -9,7 +9,7 @@ public:
 	static float* m_aspectRatio;
 	static bool mouseCaptured;
 
-	static void InitWindow(int width, int height, std::string name, float* aspectRatio, Config_loader* config);
+	static bool InitWindow(int width, int height, std::string name, float* aspectRatio, Config_loader* config);
 	static GLFWwindow* GetWindow() { return m_window; }
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 	static void KillWindow();
