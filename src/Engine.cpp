@@ -47,7 +47,7 @@ int main()
 	//Initialise UI
 	UserInterface::InitUI(WindowManager::GetWindow());
 
-	Shader shaders("src/Shaders/vertexShader.vert", "src/Shaders/fragmentShader.frag"); // you can name your shader files however you like
+	Shader shaders("src/Shaders/vertexShader.vert", "src/Shaders/fragmentShader.frag");
 	Shader lightSourceShaders("src/Shaders/lightsource.vert", "src/Shaders/lightsource.frag");
 
 	#pragma endregion
@@ -222,6 +222,10 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 		front.y = sin(glm::radians(pitch));
 		front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
 		cameraFront = glm::normalize(front);
+	}
+	else
+	{
+		firstMouse = true;
 	}
 }
 
